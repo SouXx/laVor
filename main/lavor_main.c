@@ -15,12 +15,7 @@
 
 
 
-#include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "esp_system.h"
-#include "esp_spi_flash.h"
-
+#include "lavor_main.h"
 
 void app_main()
 {
@@ -28,6 +23,7 @@ void app_main()
 
     /* Print chip information */
     esp_chip_info_t chip_info;
+
     esp_chip_info(&chip_info);
     printf("This is ESP32 chip with %d CPU cores, WiFi%s%s, ",
             chip_info.cores,

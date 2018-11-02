@@ -16,6 +16,20 @@
  *
  * Authors: Tobias Frahm, Philipp Haenyes, Joschka Sondhof, Josefine Palm, Malte Rejzek
  */
+#include "beacon_init.h"
+
+void pwm_init() {
+
+	 mcpwm_config_t mcpwm_config = {
+			.frequency = PUBLISH_FREQUENCY,
+			.cmpr_a = 50.0,
+			.duty_mode = MCPWM_DUTY_MODE_1,
+			.counter_mode = MCPWM_UP_COUNTER
+	};
+	mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, MOTOR_PWM_OUT_PIN);
+	mcpwm_init(MCPWM_UNIT_0, MCPWM0A, &mcpwm_config);
+
+}
 
 void beacon_init(void) {
 

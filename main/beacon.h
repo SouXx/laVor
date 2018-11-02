@@ -19,7 +19,7 @@
 
 #ifndef MAIN_BEACON_H_
 #define MAIN_BEACON_H_
-
+#include "lavor_main.h"
 
 
 #endif /* MAIN_BEACON_H_ */

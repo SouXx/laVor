@@ -21,6 +21,12 @@
 #ifndef MAIN_LAVOR_MAIN_H_
 #define MAIN_LAVOR_MAIN_H_
 
+#include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_system.h"
+#include "esp_spi_flash.h"
+
 #include "beacon.h"
 
 #endif /* MAIN_LAVOR_MAIN_H_ */

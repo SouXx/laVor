@@ -19,7 +19,14 @@
 
 #ifndef MAIN_BEACON_INIT_H_
 #define MAIN_BEACON_INIT_H_
+//home/tobi/esp/esp-idf/components/driver/include/driver
 
+#include "lavor_main.h"
+
+#include "driver/mcpwm.h"
+
+#include "system_config.h"
 void beacon_init(void);
+void pwm_init();
 
 #endif /* MAIN_BEACON_INIT_H_ */
