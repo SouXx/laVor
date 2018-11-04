@@ -29,7 +29,7 @@ static EventGroupHandle_t wifi_event_group;
 const int IPV4_GOTIP_BIT = BIT0;
 const int IPV6_GOTIP_BIT = BIT1;
 
-static const char *TAG = "example";
+static const char *TAG = "WIFI";
 static const char *payload = "Message from ESP32 ";
 
 static esp_err_t event_handler(void *ctx, system_event_t *event)
@@ -171,5 +171,5 @@ void udp_start()
     initialise_wifi();
     wait_for_ip();
 
-    xTaskCreatePinnedToCore(udp_client_task, "udp_client", 4096, NULL, 5, NULL, 2);
+    xTaskCreatePinnedToCore(udp_client_task, "udp_client", 4096, NULL, 5, NULL, 1);
 }
