@@ -35,5 +35,11 @@ void app_main()
     printf("%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
             (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
 
+    beacon_init();
+    xTaskCreatePinnedToCore(beacon_run, "beacon_control", 4096, NULL, 5, NULL, 2);
+
+    while(1){
+    	vTaskDelay(500);
+    }
 
 }

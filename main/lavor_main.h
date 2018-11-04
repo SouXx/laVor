@@ -28,5 +28,6 @@
 #include "esp_spi_flash.h"
 
 #include "beacon.h"
+#include "beacon_init.h"
 
 #endif /* MAIN_LAVOR_MAIN_H_ */
