@@ -24,9 +24,12 @@
 #include "lavor_main.h"
 
 #include "driver/mcpwm.h"
+#include "esp_err.h"
+#include "wifi.h"
 
 #include "system_config.h"
 void beacon_init(void);
-void pwm_init();
+void pwm_init(void);
+
 
 #endif /* MAIN_BEACON_INIT_H_ */
