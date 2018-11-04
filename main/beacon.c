@@ -16,8 +16,15 @@
  *
  * Authors: Tobias Frahm, Philipp Haenyes, Joschka Sondhof, Josefine Palm, Malte Rejzek
  */
+#include "beacon.h"
 
-
-void beacon_run(){
+static const char* TAG = "Beacon Control";
+void beacon_run(void *pvParameters) {
 	//control
+	while (1) {
+		ESP_LOGI(TAG, "Frequency of MCPWM %i ", PUBLISH_FREQUENCY);
+		ESP_LOGI(TAG, "Frequency of Beacon %i Hz", 10);
+		vTaskDelay(500);
+	}
+
 }

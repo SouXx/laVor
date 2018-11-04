@@ -19,8 +19,15 @@
 
 #ifndef MAIN_BEACON_H_
 #define MAIN_BEACON_H_
-#include "lavor_main.h"
 
-void beacon_run();
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_system.h"
+#include "esp_spi_flash.h"
+
+#include "lavor_main.h"
+#include "system_config.h"
+
+void beacon_run(void *pvParameters);
 
 #endif /* MAIN_BEACON_H_ */
