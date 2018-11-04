@@ -18,6 +18,8 @@
  */
 #include "beacon_init.h"
 
+static const char* TAG = "Initizialising";
+
 void pwm_init(void) {
 	uint32_t num_of_pulse = 0;
 	mcpwm_config_t mcpwm_config = { .frequency = PUBLISH_FREQUENCY, .cmpr_a =
@@ -33,6 +35,12 @@ void pwm_init(void) {
 }
 
 void beacon_init(void) {
+	ESP_LOGI(TAG, "Initialize MCPWM module...");
 	pwm_init();
+	ESP_LOGI(TAG, "done");
+	ESP_LOGI(TAG, "Initialize WIFI...");
+	ESP_LOGI(TAG, "Initialize UDP...");
 	udp_start(); 	// starts also the wifi client
+	ESP_LOGI(TAG, "done");
+	ESP_LOGI(TAG, "done");
 }
