@@ -19,7 +19,11 @@
 #include "beacon_init.h"
 
 static const char* TAG = "Initizialising";
+void gpio_init(void){
+	 gpio_config_t gpio_config;
+	 gpio_config.mode = GPIO_MODE_INPUT;
 
+}
 void pwm_init(void) {
 	uint32_t num_of_pulse = 0;
 	mcpwm_config_t mcpwm_config = { .frequency = PUBLISH_FREQUENCY, .cmpr_a =
@@ -30,7 +34,7 @@ void pwm_init(void) {
 	ESP_ERROR_CHECK_WITHOUT_ABORT(
 			mcpwm_init(MCPWM_UNIT_0, MCPWM0A, &mcpwm_config));
 	ESP_ERROR_CHECK_WITHOUT_ABORT(
-			mcpwm_capture_enable(MCPWM_UNIT_0, MCPWM_SELECT_CAP0,
+			mcpwm_capture_enable(MCPWM_UNIT_0, MCPWM_SELECT_CAP_PIN,
 					MCPWM_POS_EDGE, num_of_pulse));
 }
 
