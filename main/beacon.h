@@ -21,5 +21,6 @@
 #define MAIN_BEACON_H_
 #include "lavor_main.h"
 
+void beacon_run();
 
 #endif /* MAIN_BEACON_H_ */
