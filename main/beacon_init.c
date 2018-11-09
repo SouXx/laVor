@@ -18,7 +18,7 @@
  */
 #include "beacon_init.h"
 
-static const char* TAG = "Initizialising";
+static const char* TAG = "Start-up";
 void gpio_init(void){
 	 gpio_config_t gpio_config;
 	 gpio_config.mode = GPIO_MODE_INPUT;
