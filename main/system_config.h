@@ -15,6 +15,7 @@
 #define MOTOR_PWM_OUT_PIN 				(32)
 #define PUBLISH_FREQUENCY				(750) /* Hz */
 #define CAPTURE_RISING					(1)
+#define MCPWM_SELECT_CAP_PIN			(27)
 
 //WIFI
 #define CONFIG_WIFI_SSID			"sRx"

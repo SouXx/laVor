@@ -21,9 +21,10 @@
 static const char* TAG = "Beacon Control";
 void beacon_run(void *pvParameters) {
 	//control
+	ESP_LOGI(TAG, "Frequency of MCPWM %i ", PUBLISH_FREQUENCY);
+	ESP_LOGI(TAG, "Frequency of Beacon %i Hz", 10);
 	while (1) {
-		ESP_LOGI(TAG, "Frequency of MCPWM %i ", PUBLISH_FREQUENCY);
-		ESP_LOGI(TAG, "Frequency of Beacon %i Hz", 10);
+
 		vTaskDelay(500);
 	}
 
