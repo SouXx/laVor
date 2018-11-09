@@ -19,10 +19,10 @@
 #include "beacon.h"
 
 static const char* TAG = "Beacon Control";
-void beacon_run(void *pvParameters) {
+void beacon_slave_run(void *pvParameters) {
 	//control
-	ESP_LOGI(TAG, "Frequency of MCPWM %i ", PUBLISH_FREQUENCY);
-	ESP_LOGI(TAG, "Frequency of Beacon %i Hz", 10);
+	ESP_LOGI(TAG, "Startup");
+	beacon_salve_init();
 	while (1) {
 
 		vTaskDelay(500);

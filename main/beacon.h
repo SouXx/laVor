@@ -26,8 +26,9 @@
 #include "esp_spi_flash.h"
 
 #include "lavor_main.h"
+#include "beacon_init.h"
 #include "system_config.h"
 
-void beacon_run(void *pvParameters);
+void beacon_slave_run(void *pvParameters);
 
 #endif /* MAIN_BEACON_H_ */

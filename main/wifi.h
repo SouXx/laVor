@@ -20,12 +20,12 @@
 #include "esp_log.h"
 #include "nvs_flash.h"
 
-#include "lwip/err.h"
-#include "lwip/sockets.h"
-#include "lwip/sys.h"
-#include <lwip/netdb.h>
+
 
 #include "system_config.h"
 
-void udp_start();
+void initialise_wifi(void);
+void wait_for_ip();
+esp_err_t event_handler(void *ctx, system_event_t *event);
+
 #endif /* MAIN_WIFI_H_ */
