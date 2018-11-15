@@ -23,7 +23,7 @@ pwm_init (void)
   uint32_t num_of_pulse = 0;
 
   mcpwm_config_t mcpwm_config =
-    { .frequency = PUBLISH_FREQUENCY, .cmpr_a = 50.0, .duty_mode =
+    { .frequency = PWM_FREQUENCY, .cmpr_a = 50.0, .duty_mode =
 	MCPWM_DUTY_MODE_1, .counter_mode = MCPWM_UP_COUNTER };
 
   ESP_ERROR_CHECK_WITHOUT_ABORT (
