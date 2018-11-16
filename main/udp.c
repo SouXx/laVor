@@ -109,6 +109,7 @@ void udp_server_task(void *pvParameters) {
 	}
 	vTaskDelete(NULL);
 }
+
 void udp_client_task(void *pvParameters) {
 	char rx_buffer[128];
 	char addr_str[128];

@@ -28,6 +28,7 @@ void beacon_slave_run(void *pvParameters) {
 		vTaskDelay(500);
 	}
 }
+
 void beacon_slave_test_run(void *pvParameters) {
 	//control
 	struct upd_event_t *udp_event;
@@ -42,7 +43,7 @@ void beacon_slave_test_run(void *pvParameters) {
 				timer_get_counter_time_sec(TIMER_GROUP_0, TIMER_0, &time);
 				timer_set_counter_value(TIMER_GROUP_0, TIMER_0, 0x00000000ULL);
 				timer_start(TIMER_GROUP_0, TIMER_0);
-				ESP_LOGI(TAG, "Time in sec: %f",time);
+				ESP_LOGI(TAG, "Time[s] since last reset: %f",time);
 			}
 		}
 	}
