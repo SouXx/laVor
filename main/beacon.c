@@ -35,6 +35,7 @@ void beacon_slave_test_run(void *pvParameters) {
 	double time;
 	ESP_LOGI(TAG, "Startup");
 	beacon_salve_init();
+	esp_mqtt_client_subscribe(mqttClient, "/esp/test0", 0);
 	while (1) {
 		if (udpQueue != 0) {
 			if (xQueueReceive(udpQueue, &(udp_event), (TickType_t ) 10)) {
@@ -43,8 +44,11 @@ void beacon_slave_test_run(void *pvParameters) {
 				timer_get_counter_time_sec(TIMER_GROUP_0, TIMER_0, &time);
 				timer_set_counter_value(TIMER_GROUP_0, TIMER_0, 0x00000000ULL);
 				timer_start(TIMER_GROUP_0, TIMER_0);
-				ESP_LOGI(TAG, "Time[s] since last reset: %f",time);
+				ESP_LOGI(TAG, "Time[s] since last reset: %f", time);
 			}
 		}
+
+		esp_mqtt_client_publish(mqttClient, "/esp/test0", "test", sizeof("test"), 0, 0);
+
 	}
 }

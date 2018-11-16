@@ -31,6 +31,16 @@ void beacon_salve_init(void) {
 	ESP_LOGI(TAG, "Initialize MCPWM module...");
 	pwm_init();
 	timer0_init();
+
+	esp_log_level_set("*", ESP_LOG_INFO);
+	esp_log_level_set("MQTT_CLIENT", ESP_LOG_VERBOSE);
+	esp_log_level_set("TRANSPORT_TCP", ESP_LOG_VERBOSE);
+	esp_log_level_set("TRANSPORT_SSL", ESP_LOG_VERBOSE);
+	esp_log_level_set("TRANSPORT", ESP_LOG_VERBOSE);
+	esp_log_level_set("OUTBOX", ESP_LOG_VERBOSE);
+
+	mqtt_app_start();
+	vTaskDelay(500);
 	ESP_LOGI(TAG, "done");
 }
 

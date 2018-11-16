@@ -10,6 +10,9 @@
 #ifndef CONFIG_LOG_DEFAULT_LEVEL
 #define CONFIG_LOG_DEFAULT_LEVEL	ESP_LOG_INFO
 #endif //CONFIG_LOG_DEFAULT_LEVEL
+//MQTT
+#define CONFIG_BROKER_URL		"mqtt://iot.eclipse.org"
+
 //ONBAORD CONFIG
 #define LED 							(2)
 #define BUTTON							(0)
