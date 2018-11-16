@@ -31,6 +31,7 @@
 #include "mcpwm.h"
 #include "udp.h"
 #include "system_config.h"
+#include "timer.h"
 
 
 void beacon_salve_init(void);

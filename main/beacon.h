@@ -29,6 +29,7 @@
 #include "beacon_init.h"
 #include "system_config.h"
 #include "udp.h"
+#include "timer.h"
 
 void beacon_slave_run(void *pvParameters);
 void beacon_slave_test_run(void *pvParameters);
