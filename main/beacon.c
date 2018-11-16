@@ -27,5 +27,20 @@ void beacon_slave_run(void *pvParameters) {
 
 		vTaskDelay(500);
 	}
-
+}
+void beacon_slave_test_run(void *pvParameters) {
+	//control
+	struct upd_event_t *udp_event;
+	ESP_LOGI(TAG, "Startup");
+	beacon_salve_init();
+	while (1) {
+		if (udpQueue != 0) {
+			if (xQueueReceive(udpQueue, &(udp_event), (TickType_t ) 10)) {
+				ESP_LOGI(TAG, "udp_received");
+				//post timer value
+				//reset timer
+				//start again
+			}
+		}
+	}
 }

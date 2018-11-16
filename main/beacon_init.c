@@ -27,7 +27,7 @@ void beacon_salve_init(void) {
 	wait_for_ip();
 	ESP_LOGI(TAG, "done");
 	ESP_LOGI(TAG, "Create UDP listener...");
-	xTaskCreatePinnedToCore(udp_client_task, "udp_client", 4096, NULL, 5, NULL,1);
+	xTaskCreate(udp_server_task, "udp_client", 4096, NULL, 5, NULL);
 	ESP_LOGI(TAG, "Initialize MCPWM module...");
 	pwm_init();
 	ESP_LOGI(TAG, "done");

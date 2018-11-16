@@ -28,7 +28,12 @@
 #include "lavor_main.h"
 #include "beacon_init.h"
 #include "system_config.h"
+#include "udp.h"
 
 void beacon_slave_run(void *pvParameters);
+void beacon_slave_test_run(void *pvParameters);
+
+extern QueueHandle_t udpQueue;
+
 
 #endif /* MAIN_BEACON_H_ */
