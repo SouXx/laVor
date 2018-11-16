@@ -1,4 +1,3 @@
-
 /*
  * This code is part of the LaVOR system application. Please see the license.txt
  * file for further information.
@@ -13,34 +12,29 @@
  * Authors: Tobias Frahm, Philipp Haenyes, Joschka Sondhof, Josefine Palm, Malte Rejzek
  */
 
-
-
 #include "lavor_main.h"
 
-void app_main()
-{
-    printf("Hello world!\n");
+void app_main() {
+	printf("Hello world!\n");
 
-    /* Print chip information */
-    esp_chip_info_t chip_info;
+	/* Print chip information */
+	esp_chip_info_t chip_info;
 
-    esp_chip_info(&chip_info);
-    printf("This is ESP32 chip with %d CPU cores, WiFi%s%s, ",
-            chip_info.cores,
-            (chip_info.features & CHIP_FEATURE_BT) ? "/BT" : "",
-            (chip_info.features & CHIP_FEATURE_BLE) ? "/BLE" : "");
+	esp_chip_info(&chip_info);
+	printf("This is ESP32 chip with %d CPU cores, WiFi%s%s, ", chip_info.cores,
+			(chip_info.features & CHIP_FEATURE_BT) ? "/BT" : "",
+			(chip_info.features & CHIP_FEATURE_BLE) ? "/BLE" : "");
+	printf("silicon revision %d, ", chip_info.revision);
 
-    printf("silicon revision %d, ", chip_info.revision);
+	printf("%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
+			(chip_info.features & CHIP_FEATURE_EMB_FLASH) ?
+					"embedded" : "external");
 
-    printf("%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
-            (chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
+	xTaskCreate(beacon_slave_test_run, "beacon_slave_test_run", 4096, NULL, 5, NULL);
 
-
-    xTaskCreate(beacon_slave_run, "beacon_slave_run", 4096, NULL, 5, NULL);
-
-    while(1){
-    	vTaskDelay(500);
-    }
-    vTaskDelete(NULL);
+	while (1) {
+		vTaskDelay(500);
+	}
+	vTaskDelete(NULL);
 
 }
