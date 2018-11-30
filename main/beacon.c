@@ -1,6 +1,6 @@
 /*
  * beacon.c
- *
+ *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 2, 2018
  *      Author: tobi
  *
@@ -37,6 +37,7 @@ void beacon_slave_test_run(void *pvParameters) {
 	beacon_salve_init();
 	esp_mqtt_client_subscribe(mqttClient, "/esp/test0", 0);
 	while (1) {
+		vTaskDelay(2000);
 		if (udpQueue != 0) {
 			if (xQueueReceive(udpQueue, &(udp_event), (TickType_t ) 10)) {
 				ESP_LOGI(TAG, "udp_received");
@@ -48,7 +49,7 @@ void beacon_slave_test_run(void *pvParameters) {
 			}
 		}
 
-		esp_mqtt_client_publish(mqttClient, "/esp/test0", "test", sizeof("test"), 0, 0);
+		esp_mqtt_client_publish(mqttClient, "/esp/test0", "test-esp", sizeof("test-esp"), 0, 0);
 
 	}
 }

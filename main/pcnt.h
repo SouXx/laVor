@@ -1,6 +1,6 @@
 /*
  * pcnt.h
- *
+ *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 15, 2018
  *      Author: tobi
  *

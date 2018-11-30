@@ -1,6 +1,6 @@
 /*
  * mqtt.h
- *
+ *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 16, 2018
  *      Author: tobi
  *

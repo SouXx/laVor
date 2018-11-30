@@ -1,6 +1,6 @@
 /*
  * mqtt.c
- *
+ * MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 16, 2018
  *      Author: tobi
  *
@@ -23,8 +23,10 @@ static const char *TAG = "MQTT_CLIENT";
 
 esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event) {
 	esp_mqtt_client_handle_t client = event->client;
+
 	int msg_id;
-	// your_context_t *context = event->context;
+	//motor_control_values_t *context = event->user_context;
+
 
 	switch (event->event_id) {
 	case MQTT_EVENT_CONNECTED:
@@ -71,13 +73,20 @@ esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event) {
 }
 
 void mqtt_app_start(void) {
+
+/*	motor_control_values_t *p_mcv=NULL;
+	 motor_control_values_t mcv = {
+			.con_speed_setpoint = CON_SPEED_SETPOINT,
+			.con_frequency = CON_FREQUENCY,
+			.con_i = CON_P,
+			.con_p = CON_I,
+	};
+	 *p_mcv = mcv;*/
 	esp_mqtt_client_config_t mqtt_cfg = {
 			.uri = CONFIG_BROKER_URL,
 			.event_handle = mqtt_event_handler,
-
-	// .user_context = (void *)your_context
-			};
-
+			//.user_context = (void *) p_mcv,
+	};
 
 #if CONFIG_BROKER_URL_FROM_STDIN
 	char line[128];
@@ -107,5 +116,4 @@ void mqtt_app_start(void) {
 	mqttClient = esp_mqtt_client_init(&mqtt_cfg);
 	esp_mqtt_client_start(mqttClient);
 }
-
 

@@ -1,6 +1,6 @@
 /*
  * beacon.h
- *
+ *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 2, 2018
  *      Author: tobi
  *
@@ -30,6 +30,7 @@
 #include "system_config.h"
 #include "udp.h"
 #include "timer.h"
+#include "cJSON.h"
 
 void beacon_slave_run(void *pvParameters);
 void beacon_slave_test_run(void *pvParameters);

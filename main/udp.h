@@ -1,6 +1,6 @@
 /*
  * udp.h
- *
+ *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 9, 2018
  *      Author: tobi
  */
