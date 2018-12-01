@@ -2,7 +2,7 @@
  * pcnt.h
  *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 15, 2018
- *      Author: tobi
+ *      Author: Tobias Frahm
  *
  * This code is part of the LaVOR system application. Please see the license.txt
  * file for further information.

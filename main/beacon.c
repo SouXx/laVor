@@ -2,7 +2,7 @@
  * beacon.c
  *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 2, 2018
- *      Author: tobi
+ *      Author: Tobias Frahm
  *
  * This code is part of the LaVOR system application. Please see the license.txt
  * file for further information.
@@ -32,12 +32,14 @@ void beacon_slave_run(void *pvParameters) {
 void beacon_slave_test_run(void *pvParameters) {
 	//control
 	struct upd_event_t *udp_event;
+	esp_mqtt_event_handle_t event;
+
 	double time;
 	ESP_LOGI(TAG, "Startup");
 	beacon_salve_init();
-	esp_mqtt_client_subscribe(mqttClient, "/esp/test0", 0);
+
 	while (1) {
-		vTaskDelay(2000);
+		//vTaskDelay(2000);
 		if (udpQueue != 0) {
 			if (xQueueReceive(udpQueue, &(udp_event), (TickType_t ) 10)) {
 				ESP_LOGI(TAG, "udp_received");
@@ -48,8 +50,16 @@ void beacon_slave_test_run(void *pvParameters) {
 				ESP_LOGI(TAG, "Time[s] since last reset: %f", time);
 			}
 		}
+		if (mqttQueue != 0) {
+			if (xQueueReceive(mqttQueue, &(event), (TickType_t ) 10)) {
+				ESP_LOGI(TAG, "mqtt_received");
+				//printf("DATA=%.*s\r\n", event->data_len, event->data);
+				cjson_test(event->data);
 
-		esp_mqtt_client_publish(mqttClient, "/esp/test0", "test-esp", sizeof("test-esp"), 0, 0);
-
+			}
+		}
+		//esp_mqtt_client_publish(mqttClient, "/esp/test0", "test-esp", sizeof("test-esp"), 0, 0);
 	}
 }
+
+

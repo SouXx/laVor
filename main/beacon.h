@@ -2,7 +2,7 @@
  * beacon.h
  *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 2, 2018
- *      Author: tobi
+ *      Author: Tobias Frahm
  *
  * This code is part of the LaVOR system application. Please see the license.txt
  * file for further information.
@@ -27,15 +27,17 @@
 
 #include "lavor_main.h"
 #include "beacon_init.h"
+#include "lavor_cJSON.h"
 #include "system_config.h"
 #include "udp.h"
 #include "timer.h"
-#include "cJSON.h"
 
 void beacon_slave_run(void *pvParameters);
 void beacon_slave_test_run(void *pvParameters);
 
-extern QueueHandle_t udpQueue;
 
+extern QueueHandle_t udpQueue;
+extern QueueHandle_t mqttQueue;
+extern QueueHandle_t mcQueue;
 
 #endif /* MAIN_BEACON_H_ */

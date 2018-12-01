@@ -2,7 +2,7 @@
  * mqtt.h
  *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 16, 2018
- *      Author: tobi
+ *      Author: Tobias Frahm
  *
  * This code is part of the LaVOR system application. Please see the license.txt
  * file for further information.
@@ -49,5 +49,6 @@ void mqtt_app_start(void);
 
 
 esp_mqtt_client_handle_t mqttClient;
+QueueHandle_t mqttQueue;
 
 #endif /* MAIN_MQTT_H_ */

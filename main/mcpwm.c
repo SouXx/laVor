@@ -2,7 +2,7 @@
  * mcpwm.c
  *
  *  Created on: Nov 9, 2018
- *      Author: tobi
+ *      Author: Tobias Frahm
  * This code is part of the LaVOR system application. Please see the license.txt
  * file for further information.
  *

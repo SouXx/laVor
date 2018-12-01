@@ -55,11 +55,11 @@
 //#define CONFIG_WIFI_SSID			"lavor_sys0_master"
 //#define CONFIG_WIFI_PASSWORD		"7Q5JUgtJbVpJy2PYS4xF"
 //handhotspot tobi
-#define CONFIG_WIFI_SSID			"sRx"
-#define CONFIG_WIFI_PASSWORD		"7uzgl4TF"
+//#define CONFIG_WIFI_SSID			"sRx"
+//#define CONFIG_WIFI_PASSWORD		"7uzgl4TF"
 //tobi home
-//#define CONFIG_WIFI_SSID			"Boot"
-//#define CONFIG_WIFI_PASSWORD		"x3PT#/558?"
+#define CONFIG_WIFI_SSID			"Boot"
+#define CONFIG_WIFI_PASSWORD		"x3PT#/558?"
 
 #define CONFIG_ESP_MAXIMUM_RETRY		(5)
 #define HOST_IP_ADDR	"192.168.178.165"
@@ -68,7 +68,7 @@
 //MQTT
 //testbroker
 //#define CONFIG_BROKER_URL		"mqtt://iot.eclipse.org"
-//raspi test
+//raspi
 #define CONFIG_BROKER_URL		"mqtt://raspberrypi:1883"
 
 //ONBAORD CONFIG
@@ -107,10 +107,10 @@
 #define PORT			(80)
 
 typedef struct {
-	int con_speed_setpoint;	// = CON_SPEED_SETPOINT;
-	int con_frequency;	// = CON_FREQUENCY;
-	int con_i;	// = CON_P;
-	int con_p;	// = CON_I;
+	char con_speed_setpoint;	// = CON_SPEED_SETPOINT;
+	char con_frequency;	// = CON_FREQUENCY;
+	char con_i;	// = CON_P;
+	char con_p;	// = CON_I;
 } motor_control_values_t;
 
 #endif /* MAIN_SYSTEM_CONFIG_H_ */

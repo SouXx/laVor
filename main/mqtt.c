@@ -24,25 +24,32 @@ static const char *TAG = "MQTT_CLIENT";
 esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event) {
 	esp_mqtt_client_handle_t client = event->client;
 
+	mqttQueue = xQueueCreate(10, sizeof(struct esp_mqtt_client_handle_t*));
+	if( mqttQueue == 0 )
+	    {
+		ESP_LOGI(TAG, "failed to create mqttQueue");
+	    }
+
 	int msg_id;
 	//motor_control_values_t *context = event->user_context;
-
 
 	switch (event->event_id) {
 	case MQTT_EVENT_CONNECTED:
 		ESP_LOGI(TAG, "MQTT_EVENT_CONNECTED");
+		//msg_id = esp_mqtt_client_subscribe(mqttClient, "/esp/test0", 0);
+		//ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
 		msg_id = esp_mqtt_client_publish(client, "/topic/qos1", "data_3", 0, 1,
 				0);
-		ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
+		ESP_LOGI(TAG, "[MQTT_EVENT_CONNECTED]sent publish successful, msg_id=%d", msg_id);
 
-		msg_id = esp_mqtt_client_subscribe(client, "/topic/qos0", 0);
-		ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
+		msg_id = esp_mqtt_client_subscribe(client, "/esp/test0", 0);
+		ESP_LOGI(TAG, "[MQTT_EVENT_CONNECTED]sent subscribe successful, msg_id=%d", msg_id);
 
 		msg_id = esp_mqtt_client_subscribe(client, "/topic/qos1", 1);
-		ESP_LOGI(TAG, "sent subscribe successful, msg_id=%d", msg_id);
+		ESP_LOGI(TAG, "[MQTT_EVENT_CONNECTED]sent subscribe successful, msg_id=%d", msg_id);
 
 		msg_id = esp_mqtt_client_unsubscribe(client, "/topic/qos1");
-		ESP_LOGI(TAG, "sent unsubscribe successful, msg_id=%d", msg_id);
+		ESP_LOGI(TAG, "[MQTT_EVENT_CONNECTED]sent unsubscribe successful, msg_id=%d", msg_id);
 		break;
 	case MQTT_EVENT_DISCONNECTED:
 		ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED");
@@ -50,7 +57,7 @@ esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event) {
 
 	case MQTT_EVENT_SUBSCRIBED:
 		ESP_LOGI(TAG, "MQTT_EVENT_SUBSCRIBED, msg_id=%d", event->msg_id);
-		msg_id = esp_mqtt_client_publish(client, "/topic/qos0", "data", 0, 0,
+		msg_id = esp_mqtt_client_publish(client, "/esp/test0", "data", 0, 0,
 				0);
 		ESP_LOGI(TAG, "sent publish successful, msg_id=%d", msg_id);
 		break;
@@ -63,7 +70,11 @@ esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event) {
 	case MQTT_EVENT_DATA:
 		ESP_LOGI(TAG, "MQTT_EVENT_DATA");
 		printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
-		printf("DATA=%.*s\r\n", event->data_len, event->data);
+		//printf("DATA=%.*s\r\n", event->data_len, event->data);
+		if (xQueueSend(mqttQueue, (void * ) &event,
+				(TickType_t ) 10) != pdPASS) {
+			ESP_LOGI(TAG, "Queue push failed");
+		}
 		break;
 	case MQTT_EVENT_ERROR:
 		ESP_LOGI(TAG, "MQTT_EVENT_ERROR");
@@ -74,19 +85,15 @@ esp_err_t mqtt_event_handler(esp_mqtt_event_handle_t event) {
 
 void mqtt_app_start(void) {
 
-/*	motor_control_values_t *p_mcv=NULL;
-	 motor_control_values_t mcv = {
-			.con_speed_setpoint = CON_SPEED_SETPOINT,
-			.con_frequency = CON_FREQUENCY,
-			.con_i = CON_P,
-			.con_p = CON_I,
-	};
-	 *p_mcv = mcv;*/
-	esp_mqtt_client_config_t mqtt_cfg = {
-			.uri = CONFIG_BROKER_URL,
-			.event_handle = mqtt_event_handler,
-			//.user_context = (void *) p_mcv,
-	};
+	motor_control_values_t mcv;
+
+	mcv.con_speed_setpoint = CON_SPEED_SETPOINT;
+	mcv.con_frequency = CON_FREQUENCY;
+	mcv.con_i = CON_P;
+	mcv.con_p = CON_I;
+
+	esp_mqtt_client_config_t mqtt_cfg = { .uri = CONFIG_BROKER_URL,
+			.event_handle = mqtt_event_handler, .user_context = (void *) &mcv, };
 
 #if CONFIG_BROKER_URL_FROM_STDIN
 	char line[128];
