@@ -69,7 +69,7 @@ int cjson_mc(const char * const data) {
 		newMCValues.con_p = con_p->valuestring;
 		printf("con_p \"%s\"\n", con_p->valuestring);
 	}
-
+	//Queue
 	if (xQueueSend(mcQueue, (void * ) &newMCValues,
 			(TickType_t ) 10) != pdPASS) {
 		ESP_LOGI(TAG, "Queue push failed");

@@ -39,7 +39,7 @@ void beacon_slave_test_run(void *pvParameters) {
 	beacon_salve_init();
 
 	while (1) {
-		//vTaskDelay(2000);
+
 		if (udpQueue != 0) {
 			if (xQueueReceive(udpQueue, &(udp_event), (TickType_t ) 10)) {
 				ESP_LOGI(TAG, "udp_received");
@@ -54,10 +54,11 @@ void beacon_slave_test_run(void *pvParameters) {
 			if (xQueueReceive(mqttQueue, &(event), (TickType_t ) 10)) {
 				ESP_LOGI(TAG, "mqtt_received");
 				//printf("DATA=%.*s\r\n", event->data_len, event->data);
-				cjson_test(event->data);
+				cjson_mc(event->data);
 
 			}
 		}
+		//vTaskDelay(2000);
 		//esp_mqtt_client_publish(mqttClient, "/esp/test0", "test-esp", sizeof("test-esp"), 0, 0);
 	}
 }
