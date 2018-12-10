@@ -37,7 +37,13 @@
 #include "esp_spi_flash.h"
 #include "system_config.h"
 
+
+
+
+
 void pcnt_init(void);
+void IRAM_ATTR index_isr_handler(void* arg);
+
 
 
 
