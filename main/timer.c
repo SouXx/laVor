@@ -66,19 +66,4 @@ void timer1_init() {
 	timer_start(TIMER_GROUP_0, TIMER_1);
 }
 
-void timer0_init() {
-	/* Select and initialize basic parameters of the timer */
-	timer_config_t config;
-	config.divider = TIMER_DIVIDER;
-	config.counter_dir = TIMER_COUNT_UP;
-	config.counter_en = TIMER_PAUSE;
-	config.alarm_en = TIMER_ALARM_EN;
-	config.intr_type = TIMER_INTR_LEVEL;
-	timer_init(TIMER_GROUP_0, TIMER_0, &config);
 
-	/* Timer's counter will initially start from value below.
-	 Also, if auto_reload is set, this value will be automatically reload on alarm */
-	timer_set_counter_value(TIMER_GROUP_0, TIMER_0, 0x00000000ULL);
-
-	timer_start(TIMER_GROUP_0, TIMER_0);
-}
