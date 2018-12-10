@@ -20,18 +20,28 @@
 void
 pwm_init (void)
 {
-  uint32_t num_of_pulse = 0;
+	  mcpwm_pin_config_t pin_config = {
+		        .mcpwm0a_out_num = MOTOR_PWM_OUT_PIN,
+		        //.mcpwm_cap0_in_num   = ENCODER_A,
+		    };
+		    mcpwm_set_pin(MCPWM_UNIT_0, &pin_config);
 
-  mcpwm_config_t mcpwm_config =
-    { .frequency = PWM_FREQUENCY, .cmpr_a = 50.0, .duty_mode =
-	MCPWM_DUTY_MODE_1, .counter_mode = MCPWM_UP_COUNTER };
 
-  ESP_ERROR_CHECK_WITHOUT_ABORT (
-      mcpwm_gpio_init (MCPWM_UNIT_0, MCPWM0A, MOTOR_PWM_OUT_PIN));
-  ESP_ERROR_CHECK_WITHOUT_ABORT (
-      mcpwm_init (MCPWM_UNIT_0, MCPWM0A, &mcpwm_config));
-  ESP_ERROR_CHECK_WITHOUT_ABORT (
-      mcpwm_capture_enable (MCPWM_UNIT_0, MCPWM_SELECT_CAP_PIN, MCPWM_POS_EDGE,
-			    num_of_pulse));
+		    //printf("Configuring Initial Parameters of mcpwm...\n");
+		    mcpwm_config_t pwm_config;
+		    pwm_config.frequency = PWM_FREQUENCY;    //frequency of Motor
+		    pwm_config.cmpr_a = 0.0;       //duty cycle Motor
+		    pwm_config.counter_mode = MCPWM_UP_COUNTER;
+		    pwm_config.duty_mode = MCPWM_DUTY_MODE_1;
+		    mcpwm_init(MCPWM_UNIT_0, MCPWM_TIMER_0, &pwm_config);   //Configure PWM0A & PWM0B with above settings
+
+
+
+		    //2. Capture configuration
+		    /*
+		     mcpwm_capture_enable(MCPWM_UNIT_0, MCPWM_SELECT_CAP0, MCPWM_POS_EDGE, 20);  //capture signal on rising edge, prescale = 10 i.e. 8,000,000 counts is equal to one second
+		    MCPWM->int_ena.val = BIT(27);  //Enable interrupt on  CAP0 in Interrupt-Status-Register
+		    mcpwm_isr_register(MCPWM_UNIT_0, capture_isr_handler, NULL, ESP_INTR_FLAG_IRAM, NULL);  //Set ISR Handler
+	*/
 }
 
