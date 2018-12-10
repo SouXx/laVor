@@ -19,6 +19,82 @@
 #include "beacon.h"
 
 static const char* TAG = "Beacon Control";
+
+void beacon_controller(void *pvParameters){
+	//control
+		ESP_LOGI(TAG, "Frequency of MCPWM %i ", PWM_FREQUENCY);
+		ESP_LOGI(TAG, "Setpoint of Beacon %i Hz", CON_SPEED_SETPOINT );
+
+			// Berechnet die Schrittweite für Lageregler
+			float a_step = CON_SPEED_SETPOINT;
+			// Werte für Regler, update später über MQTT!
+			float s_setpoint = CON_SPEED_SETPOINT;
+			float p = CON_P;
+			float i = CON_I;
+			float d = CON_D;
+			float a = CON_A;
+
+			float a_setpoint = 0;
+
+			float s_e_sum = 0;
+			float s_e_old = 0;
+			float y = 20.0;
+			float speed = 0.0;
+			// Ziele für Queues
+			uint32_t capture = 0;
+			int count = 0;
+			float old_count = 0.0;
+	        mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A, y); // "Anschubsen"
+	    	vTaskDelay(100/portTICK_PERIOD_MS);
+
+
+		while (1) {
+
+
+
+			        xQueueReceive(timer_queue, &count, portMAX_DELAY);
+
+					//xQueueReceive(cap_queue, &capture, 0);
+					//if(capture > 0 ) speed = (4000000000 / capture) * 2; //Speed in mHz
+
+			        speed = (float)count - old_count;
+			        if (speed < 0) speed += ENCODER_CPR;
+
+			        float a_e = a_setpoint - (float)count;
+			        if (a_e > 800.0) a_e -= 1600;
+			        if (a_e <= -800.0) a_e += 1600;
+
+
+			        float s_e = s_setpoint - speed + (a_e * a) ; // Regelfehler berechnen
+
+			        if (y < 100.0) s_e_sum += s_e; //Integrierer Begrenzt in Grenze der Stellgröße(ANTI-WINDUP)
+			        y = (p*s_e) + (i/CON_FREQUENCY*s_e_sum) + d*CON_FREQUENCY*(s_e - s_e_old) ;
+
+			        // Begrenzung für Duty-Cycle
+			        if(y >= 100.0) y = 100.0;
+			        if(y < 0.0) y = 0.0;
+
+			        mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A, y);
+
+
+
+			        printf("Speed: %f \t E: %f   \t y: %f \t A_e: %f \n", speed, s_e, y, a_e);
+			        //printf("Speed: ");
+			        //printf("%d \n", speed);
+
+			        // Neuer Sollwert für Winkelcontrol
+			      		        	a_setpoint += a_step;
+			      		        	if (a_setpoint >= ENCODER_CPR) a_setpoint = 0;
+
+			      		        	s_e_old = s_e;
+			      		        	old_count = count;
+
+		}
+
+}
+
+
+
 void beacon_slave_run(void *pvParameters) {
 	//control
 	ESP_LOGI(TAG, "Startup");

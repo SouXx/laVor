@@ -76,4 +76,7 @@ typedef struct {
 	char con_p;	// = CON_I;
 } motor_control_values_t;
 
+#define ESP_INTR_FLAG_DEFAULT 0
+
+
 #endif /* MAIN_SYSTEM_CONFIG_H_ */
