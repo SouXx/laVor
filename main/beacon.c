@@ -61,6 +61,7 @@ void beacon_controller(void *pvParameters){
 
 			        speed = (float)count - old_count;
 			        if (speed < 0) speed += ENCODER_CPR;
+			        if (speed > 200) speed = s_setpoint;
 
 			        float a_e = a_setpoint - (float)count;
 			        if (a_e > 800.0) a_e -= 1600;
@@ -80,7 +81,7 @@ void beacon_controller(void *pvParameters){
 
 
 
-			        printf("Speed: %f \t E: %f   \t y: %f \t A_e: %f \n", speed, s_e, y, a_e);
+			        printf("Speed: %f \t A_set %f  \t  A_e: %f \n", speed, a_setpoint, a_e);
 			        //printf("Speed: ");
 			        //printf("%d \n", speed);
 
