@@ -55,7 +55,7 @@ void beacon_controller(void *pvParameters){
 
 
 			        xQueueReceive(timer_queue, &count, portMAX_DELAY);
-
+			        // Capture erstmal außer Betrieb...
 					//xQueueReceive(cap_queue, &capture, 0);
 					//if(capture > 0 ) speed = (4000000000 / capture) * 2; //Speed in mHz
 
