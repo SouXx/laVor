@@ -38,7 +38,7 @@ void beacon_salve_init(void) {
 	esp_log_level_set("OUTBOX", ESP_LOG_VERBOSE);
 
 	mqtt_app_start();
-	beacon_controller_init();
+
 	vTaskDelay(500);
 	ESP_LOGI(TAG, "done");
 }
