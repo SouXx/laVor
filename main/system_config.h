@@ -22,11 +22,11 @@
 #define CON_P							(0.8187)
 #define CON_I							(19.7757)
 #define CON_D							(0.0)
-#define CON_A							(0.008)
+#define CON_A							(0.08)
 
 // MOTOR/MCPWM CONFIG
 #define MOTOR_PWM_OUT_PIN 				(32)
-#define PWM_FREQUENCY					(750) /* Hz */
+#define PWM_FREQUENCY					(1000) /* Hz */
 #define CAPTURE_RISING					(1)
 #define MCPWM_SELECT_CAP_PIN			(27)
 
