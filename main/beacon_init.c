@@ -30,7 +30,6 @@ void beacon_salve_init(void) {
 	xTaskCreate(udp_server_task, "udp_client", 4096, NULL, 5, NULL);
 	ESP_LOGI(TAG, "Initialize MCPWM module...");
 	pwm_init();
-	timer0_init();
 
 	esp_log_level_set("*", ESP_LOG_INFO);
 	esp_log_level_set("MQTT_CLIENT", ESP_LOG_VERBOSE);
