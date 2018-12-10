@@ -22,8 +22,10 @@ static const char* TAG = "Beacon Control";
 
 void beacon_controller(void *pvParameters){
 	//control
-		ESP_LOGI(TAG, "Frequency of MCPWM %i ", PWM_FREQUENCY);
-		ESP_LOGI(TAG, "Setpoint of Beacon %i Hz", CON_SPEED_SETPOINT );
+	beacon_controller_init();
+
+
+
 
 			// Berechnet die Schrittweite für Lageregler
 			float a_step = CON_SPEED_SETPOINT;
@@ -41,7 +43,7 @@ void beacon_controller(void *pvParameters){
 			float y = 20.0;
 			float speed = 0.0;
 			// Ziele für Queues
-			uint32_t capture = 0;
+			// uint32_t capture = 0;
 			int count = 0;
 			float old_count = 0.0;
 	        mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A, y); // "Anschubsen"
