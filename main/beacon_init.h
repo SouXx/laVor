@@ -33,11 +33,12 @@
 #include "system_config.h"
 #include "timer.h"
 #include "mqtt.h"
+#include "pcnt.h"
 
 
 void beacon_salve_init(void);
 void beacon_master_init(void);
-void pwm_init(void);
+void beacon_controller_init(void);
 
 extern esp_mqtt_client_handle_t mqttClient;
 #endif /* MAIN_BEACON_INIT_H_ */

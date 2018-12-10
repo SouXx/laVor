@@ -36,8 +36,9 @@
 
 xQueueHandle timer_queue;
 
-void IRAM_ATTR timer_isr(void *para);
 void timer1_init();
+void IRAM_ATTR timer_isr(void *para);
+
 
 
 

@@ -21,6 +21,18 @@
 static const char* TAG = "Pulse Counter";
 
 
+void IRAM_ATTR index_isr_handler(void* arg) {
+
+	//Counter bei Indexflanke zurücksetzen
+	pcnt_counter_clear(PCNT_UNIT_0);
+	pcnt_counter_clear(PCNT_UNIT_2);
+
+	//printf("RESET \n");
+
+}
+
+
+
 void pcnt_init(void){
 	//decoder phase A
 		pcnt_config_t pcnt_config = {
@@ -88,5 +100,28 @@ void pcnt_init(void){
 		}else{
 			ESP_LOGI(TAG, "Pulse counter failed");
 		}
+
+		//Install ISR on Index to Reset Pulse counter
+
+		gpio_config_t io_conf;
+
+		//interrupt of rising edge
+		io_conf.intr_type = GPIO_PIN_INTR_POSEDGE;
+		//bit mask of the pins, use GPIO4/5 here
+		io_conf.mode = GPIO_MODE_INPUT;
+		//disable pull-up/-down mode
+		io_conf.pin_bit_mask = (1<<ENCODER_I);
+		//set as input mode
+		io_conf.pull_up_en = 0;
+		io_conf.pull_down_en = 0;
+
+		gpio_config(&io_conf);
+
+		gpio_install_isr_service(ESP_INTR_FLAG_DEFAULT);
+		//hook isr handler for specific gpio pin
+		gpio_isr_handler_add(ENCODER_I, index_isr_handler, (void*) ENCODER_I);
+
+
+
 
 }

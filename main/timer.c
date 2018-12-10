@@ -20,9 +20,7 @@
 #include "timer.h"
 //static const char* TAG = "Timer";
 
-int16_t count0;
-int16_t count1;
-int count_sum = -1;
+
 
 void IRAM_ATTR timer_isr(void *para) {
 
@@ -35,6 +33,10 @@ void IRAM_ATTR timer_isr(void *para) {
 
 	/* Now just send the event data back to the main program task */
 	// ESP_LOGI(TAG, "ISR Done");
+
+	int16_t count0;
+	int16_t count1;
+	int16_t count_sum = -1;
 	pcnt_get_counter_value(PCNT_UNIT_0, &count0);
 	pcnt_get_counter_value(PCNT_UNIT_2, &count1);
 	count_sum = count0 + count1;

@@ -32,6 +32,7 @@ void app_main() {
 					"embedded" : "external");
 
 	xTaskCreate(beacon_slave_test_run, "beacon_slave_test_run", 4096, NULL, 5, NULL);
+	xTaskCreate(beacon_controller, "beacon_controller", 4096, NULL, 6, NULL);
 
 	while (1) {
 		vTaskDelay(500);

@@ -21,6 +21,8 @@
 #define MAIN_PCNT_H_
 
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
@@ -37,7 +39,24 @@
 #include "esp_spi_flash.h"
 #include "system_config.h"
 
+#include "driver/mcpwm.h"
+#include "driver/timer.h"
+#include "soc/timer_group_struct.h"
+#include "soc/mcpwm_reg.h"
+#include "soc/mcpwm_struct.h"
+#include "soc/rtc.h"
+#include "esp_intr_alloc.h"
+#include "esp_types.h"
+#include "timer.h"
+
+#include <stdio.h>
+
+
+
+
 void pcnt_init(void);
+void IRAM_ATTR index_isr_handler(void* arg);
+
 
 
 
