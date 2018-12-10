@@ -17,10 +17,12 @@
 #define BUTTON							(0)
 
 // CONTROLLER CONFIG
-#define CON_SPEED_SETPOINT				(10) // Revolutions per second
-#define CON_FREQUENCY					(100)// Must be multiple of speed setpoint
-#define CON_P							(0)
-#define CON_I							(0)
+#define CON_SPEED_SETPOINT				(160) // Milli-Revolutions per second
+#define CON_FREQUENCY					(100.0)// Must be multiple of speed setpoint/1000
+#define CON_P							(0.8187)
+#define CON_I							(19.7757)
+#define CON_D							(0.0)
+#define CON_A							(0.008)
 
 // MOTOR/MCPWM CONFIG
 #define MOTOR_PWM_OUT_PIN 				(32)
