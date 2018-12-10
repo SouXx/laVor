@@ -70,10 +70,11 @@
 #define CONFIG_BROKER_URL				"mqtt://192.168.2.100:1883"
 
 typedef struct {
-	char con_speed_setpoint;	// = CON_SPEED_SETPOINT;
-	char con_frequency;	// = CON_FREQUENCY;
-	char con_i;	// = CON_P;
-	char con_p;	// = CON_I;
+	float con_speed_setpoint;	// = CON_SPEED_SETPOINT;
+	float con_i;	// = CON_P;
+	float con_p;	// = CON_I;
+	float con_d;
+	float con_a;
 } motor_control_values_t;
 
 #define ESP_INTR_FLAG_DEFAULT 0

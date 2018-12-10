@@ -88,9 +88,10 @@ void mqtt_app_start(void) {
 	motor_control_values_t mcv;
 
 	mcv.con_speed_setpoint = CON_SPEED_SETPOINT;
-	mcv.con_frequency = CON_FREQUENCY;
 	mcv.con_i = CON_P;
 	mcv.con_p = CON_I;
+	mcv.con_d = CON_D;
+	mcv.con_a = CON_A;
 
 	esp_mqtt_client_config_t mqtt_cfg = { .uri = CONFIG_BROKER_URL,
 			.event_handle = mqtt_event_handler, .user_context = (void *) &mcv, };

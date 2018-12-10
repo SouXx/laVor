@@ -31,12 +31,14 @@ int cjson_mc(const char * const data) {
 		    }
 
 	const cJSON *con_speed_setpoint = NULL;
-	const cJSON *con_frequency = NULL;
 	const cJSON *con_i = NULL;
 	const cJSON *con_p = NULL;
+	const cJSON *con_d = NULL;
+	const cJSON *con_a = NULL;
 
 	int status = 0;
 	cJSON *data_json = cJSON_Parse(data);
+
 	if (data_json == NULL) {
 		const char *error_ptr = cJSON_GetErrorPtr();
 		if (error_ptr != NULL) {
@@ -50,25 +52,31 @@ int cjson_mc(const char * const data) {
 			"con_speed_setpoint");
 	if (cJSON_IsString(con_speed_setpoint)
 			&& (con_speed_setpoint->valuestring != NULL)) {
-		newMCValues.con_speed_setpoint = con_speed_setpoint->valuestring;
+		newMCValues.con_speed_setpoint = atof(con_speed_setpoint->valuestring);
 		printf("con_speed_setpoint \"%s\"\n", con_speed_setpoint->valuestring);
 	}
-	con_frequency = cJSON_GetObjectItemCaseSensitive(data_json,
-			"con_frequency");
-	if (cJSON_IsString(con_frequency) && (con_frequency->valuestring != NULL)) {
-		newMCValues.con_frequency = con_frequency->valuestring;
-		printf("con_frequency \"%s\"\n", con_frequency->valuestring);
-	}
-	con_i = cJSON_GetObjectItemCaseSensitive(data_json, "con_i");
-	if (cJSON_IsString(con_i) && (con_i->valuestring != NULL)) {
-		newMCValues.con_i = con_i->valuestring;
-		printf("con_i \"%s\"\n", con_i->valuestring);
-	}
-	con_p = cJSON_GetObjectItemCaseSensitive(data_json, "con_p");
+	con_p = cJSON_GetObjectItemCaseSensitive(data_json,
+			"con_p");
 	if (cJSON_IsString(con_p) && (con_p->valuestring != NULL)) {
-		newMCValues.con_p = con_p->valuestring;
+		newMCValues.con_p = atof(con_p->valuestring);
 		printf("con_p \"%s\"\n", con_p->valuestring);
 	}
+
+	con_i = cJSON_GetObjectItemCaseSensitive(data_json, "con_i");
+	if (cJSON_IsString(con_i) && (con_i->valuestring != NULL)) {
+		newMCValues.con_i = atof(con_i->valuestring);
+		printf("con_i \"%s\"\n", con_i->valuestring);
+	}
+	con_d = cJSON_GetObjectItemCaseSensitive(data_json, "con_p");
+	if (cJSON_IsString(con_d) && (con_d->valuestring != NULL)) {
+		newMCValues.con_d = atof(con_d->valuestring);
+		printf("con_d \"%s\"\n", con_d->valuestring);
+	}
+	con_a = cJSON_GetObjectItemCaseSensitive(data_json, "con_p");
+		if (cJSON_IsString(con_a) && (con_a->valuestring != NULL)) {
+			newMCValues.con_a = atof(con_a->valuestring);
+			printf("con_a \"%s\"\n", con_a->valuestring);
+		}
 	//Queue
 	if (xQueueSend(mcQueue, (void * ) &newMCValues,
 			(TickType_t ) 10) != pdPASS) {
