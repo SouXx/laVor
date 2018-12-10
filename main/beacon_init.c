@@ -18,33 +18,32 @@
  */
 #include "beacon_init.h"
 
-static const char* TAG = "Start-up";
-void gpio_init(void){
-	 gpio_config_t gpio_config;
-	 gpio_config.mode = GPIO_MODE_INPUT;
+void beacon_salve_init(void) {
+	static const char* TAG = "beacon_slave";
 
-}
-void pwm_init(void) {
-	uint32_t num_of_pulse = 0;
-	mcpwm_config_t mcpwm_config = { .frequency = PUBLISH_FREQUENCY, .cmpr_a =
-			50.0, .duty_mode = MCPWM_DUTY_MODE_1, .counter_mode =
-			MCPWM_UP_COUNTER };
-	ESP_ERROR_CHECK_WITHOUT_ABORT(
-			mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, MOTOR_PWM_OUT_PIN));
-	ESP_ERROR_CHECK_WITHOUT_ABORT(
-			mcpwm_init(MCPWM_UNIT_0, MCPWM0A, &mcpwm_config));
-	ESP_ERROR_CHECK_WITHOUT_ABORT(
-			mcpwm_capture_enable(MCPWM_UNIT_0, MCPWM_SELECT_CAP_PIN,
-					MCPWM_POS_EDGE, num_of_pulse));
-}
-
-void beacon_init(void) {
+	ESP_LOGI(TAG, "Initialize WIFI...");
+	ESP_ERROR_CHECK(nvs_flash_init());
+	initialise_wifi();
+	wait_for_ip();
+	ESP_LOGI(TAG, "done");
+	ESP_LOGI(TAG, "Create UDP listener...");
+	xTaskCreate(udp_server_task, "udp_client", 4096, NULL, 5, NULL);
 	ESP_LOGI(TAG, "Initialize MCPWM module...");
 	pwm_init();
+	timer0_init();
+
+	esp_log_level_set("*", ESP_LOG_INFO);
+	esp_log_level_set("MQTT_CLIENT", ESP_LOG_VERBOSE);
+	esp_log_level_set("TRANSPORT_TCP", ESP_LOG_VERBOSE);
+	esp_log_level_set("TRANSPORT_SSL", ESP_LOG_VERBOSE);
+	esp_log_level_set("TRANSPORT", ESP_LOG_VERBOSE);
+	esp_log_level_set("OUTBOX", ESP_LOG_VERBOSE);
+
+	mqtt_app_start();
+	vTaskDelay(500);
 	ESP_LOGI(TAG, "done");
-	ESP_LOGI(TAG, "Initialize WIFI...");
-	ESP_LOGI(TAG, "Initialize UDP...");
-	udp_start(); 	// starts also the wifi client
-	ESP_LOGI(TAG, "done");
-	ESP_LOGI(TAG, "done");
+}
+
+void beacon_master_init(void) {
+	// so much space to fill
 }

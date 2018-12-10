@@ -1,0 +1,9 @@
+#ignore ...
+build/
+CMakelists.txt
+Makefile
+sdkconfig
+sdkconfig.old
+.project
+.cproject
+.settings/

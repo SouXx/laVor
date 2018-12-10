@@ -1,7 +1,7 @@
 /*
- * beacon.h
+ * pcnt.h
  *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
- *  Created on: Nov 2, 2018
+ *  Created on: Nov 15, 2018
  *      Author: Tobias Frahm
  *
  * This code is part of the LaVOR system application. Please see the license.txt
@@ -17,27 +17,29 @@
  * Authors: Tobias Frahm, Philipp Haenyes, Joschka Sondhof, Josefine Palm, Malte Rejzek
  */
 
-#ifndef MAIN_BEACON_H_
-#define MAIN_BEACON_H_
+#ifndef MAIN_PCNT_H_
+#define MAIN_PCNT_H_
 
+#include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/queue.h"
+#include "freertos/portmacro.h"
+#include "driver/pcnt.h"
+#include "driver/gpio.h"
+#include "driver/periph_ctrl.h"
+#include "soc/gpio_sig_map.h"
+#include "esp_err.h"
+#include "esp_attr.h"
 #include "esp_system.h"
+#include "esp_log.h"
+#include "esp_types.h"
 #include "esp_spi_flash.h"
-
-#include "lavor_main.h"
-#include "beacon_init.h"
-#include "lavor_cJSON.h"
 #include "system_config.h"
-#include "udp.h"
-#include "timer.h"
 
-void beacon_slave_run(void *pvParameters);
-void beacon_slave_test_run(void *pvParameters);
+void pcnt_init(void);
 
 
-extern QueueHandle_t udpQueue;
-extern QueueHandle_t mqttQueue;
-extern QueueHandle_t mcQueue;
 
-#endif /* MAIN_BEACON_H_ */
+
+#endif /* MAIN_PCNT_H_ */

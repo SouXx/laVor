@@ -1,9 +1,8 @@
 /*
- * beacon_init.h
+ * mcpwm.h
  *
- *  Created on: Nov 2, 2018
+ *  Created on: Nov 9, 2018
  *      Author: tobi
- *
  * This code is part of the LaVOR system application. Please see the license.txt
  * file for further information.
  *
@@ -17,27 +16,15 @@
  * Authors: Tobias Frahm, Philipp Haenyes, Joschka Sondhof, Josefine Palm, Malte Rejzek
  */
 
-#ifndef MAIN_BEACON_INIT_H_
-#define MAIN_BEACON_INIT_H_
-//home/tobi/esp/esp-idf/components/driver/include/driver
+#ifndef MAIN_MCPWM_H_
+#define MAIN_MCPWM_H_
 
-#include "lavor_main.h"
+#include "driver/mcpwm.h"
 
-
-#include "esp_err.h"
-
-
-#include "wifi.h"
-#include "mcpwm.h"
-#include "udp.h"
+//laVor
 #include "system_config.h"
-#include "timer.h"
-#include "mqtt.h"
 
 
-void beacon_salve_init(void);
-void beacon_master_init(void);
 void pwm_init(void);
 
-extern esp_mqtt_client_handle_t mqttClient;
-#endif /* MAIN_BEACON_INIT_H_ */
+#endif /* MAIN_MCPWM_H_ */

@@ -1,7 +1,7 @@
 /*
- * beacon_init.h
- *
- *  Created on: Nov 2, 2018
+ * cJSON.h
+ * MOST OF THE CODE IS BASED ON EXAMPLES FROM hhtps://github.com/espresif/esp-idf
+ *  Created on: Dec 1, 2018
  *      Author: tobi
  *
  * This code is part of the LaVOR system application. Please see the license.txt
@@ -17,27 +17,16 @@
  * Authors: Tobias Frahm, Philipp Haenyes, Joschka Sondhof, Josefine Palm, Malte Rejzek
  */
 
-#ifndef MAIN_BEACON_INIT_H_
-#define MAIN_BEACON_INIT_H_
-//home/tobi/esp/esp-idf/components/driver/include/driver
+#ifndef MAIN_LAVOR_CJSON_H_
+#define MAIN_LAVOR_CJSON_H_
 
+#include "cJSON.h"
 #include "lavor_main.h"
-
-
-#include "esp_err.h"
-
-
-#include "wifi.h"
-#include "mcpwm.h"
-#include "udp.h"
+#include "freertos/queue.h"
 #include "system_config.h"
-#include "timer.h"
-#include "mqtt.h"
+
+QueueHandle_t mcQueue;
+int cjson_mc(const char * const data);
 
 
-void beacon_salve_init(void);
-void beacon_master_init(void);
-void pwm_init(void);
-
-extern esp_mqtt_client_handle_t mqttClient;
-#endif /* MAIN_BEACON_INIT_H_ */
+#endif /* MAIN_LAVOR_CJSON_H_ */
