@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+<<<<<<< Updated upstream
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1120415546/BATCH_BUILD/delimiter=\:
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1120415546/BATCH_BUILD/operation=append
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1120415546/BATCH_BUILD/value=1
@@ -10,3 +11,19 @@ environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1120415546/PATH/op
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1120415546/PATH/value=/bin\:/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/usr/games\:/usr/local/games\:/snap/bin\:/home/tobi/esp/xtensa-esp32-elf/bin
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1120415546/append=true
 environment/project/cdt.managedbuild.toolchain.gnu.cross.base.1120415546/appendContributed=true
+=======
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/BATCH_BUILD/delimiter=\:
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/BATCH_BUILD/operation=append
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/BATCH_BUILD/value=1
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/IDF_PATH/delimiter=\:
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/IDF_PATH/operation=append
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/IDF_PATH/value=/Users/malte/esp/esp-idf
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/PATH/delimiter=\:
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/PATH/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/PATH/value=/bin\:/usr/bin\:/usr/sbin\:/sbin\:/Users/malte/esp/xtensa-esp32-elf/bin
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/PYTHONPATH/delimiter=\:
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/PYTHONPATH/operation=append
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/PYTHONPATH/value=/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/append=true
+environment/project/cdt.managedbuild.toolchain.gnu.cross.base.888086514/appendContributed=true
+>>>>>>> Stashed changes
