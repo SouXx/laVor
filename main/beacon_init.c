@@ -68,12 +68,12 @@ void beacon_controller_init(void){
 			//gpio_init();
 			pcnt_init();
 
-			timer_queue = xQueueCreate(1, sizeof(uint16_t));
+			timer_queue = xQueueCreate(1, sizeof(struct controller_evt_t));
 				if( mqttQueue == 0 )
 				    {
 					ESP_LOGI(TAG, "failed to create mqttQueue");
 				    }
-
+			timer0_init();
 			timer1_init();
 }
 

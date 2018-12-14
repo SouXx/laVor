@@ -45,30 +45,39 @@ void beacon_controller(void *pvParameters){
 			// Ziele für Queues
 			// uint32_t capture = 0;
 			int count = 0;
-			float old_count = 0.0;
+			float old_count = 0;
 	        mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A, y); // "Anschubsen"
 	    	vTaskDelay(100/portTICK_PERIOD_MS);
+
+	    	struct controller_evt_t controller_data;
+
 
 
 		while (1) {
 
 
 
-			        xQueueReceive(timer_queue, &count, portMAX_DELAY);
+			        xQueueReceive(timer_queue, &controller_data, portMAX_DELAY);
 			        // Capture erstmal außer Betrieb...
 					//xQueueReceive(cap_queue, &capture, 0);
 					//if(capture > 0 ) speed = (4000000000 / capture) * 2; //Speed in mHz
+			        count = controller_data.count1 + controller_data.count2;
 
 			        speed = (float)count - old_count;
 			        if (speed < 0) speed += ENCODER_CPR;
 			        if (speed > 200) speed = s_setpoint;
 
+
+			        a_setpoint = ((float)controller_data.angle_timer*0.016);
 			        float a_e = a_setpoint - (float)count;
 			        if (a_e > 800.0) a_e -= 1600;
 			        if (a_e <= -800.0) a_e += 1600;
 
 
-			        float s_e = s_setpoint - speed + (a_e * a) ; // Regelfehler berechnen
+			       // float s_e = (s_setpoint*16) - speed + (a_e * a) ; // Regelfehler berechnen
+
+			        float s_e = (s_setpoint*16) - speed; // Regelfehler berechnen
+
 
 			        if (y < 100.0) s_e_sum += s_e; //Integrierer Begrenzt in Grenze der Stellgröße(ANTI-WINDUP)
 			        y = (p*s_e) + (i/CON_FREQUENCY*s_e_sum) + d*CON_FREQUENCY*(s_e - s_e_old) ;
@@ -81,13 +90,10 @@ void beacon_controller(void *pvParameters){
 
 
 
-			        printf("Speed: %f \t A_set %f  \t  A_e: %f \n", speed, a_setpoint, a_e);
+			        printf("Speed: %f \t  %f \t  %d \t  \n", speed, s_e, count);
 			        //printf("Speed: ");
 			        //printf("%d \n", speed);
 
-			        // Neuer Sollwert für Winkelcontrol
-			      		        	a_setpoint += a_step;
-			      		        	if (a_setpoint >= ENCODER_CPR) a_setpoint = 0;
 
 			      		        	s_e_old = s_e;
 			      		        	old_count = count;
