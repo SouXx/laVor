@@ -20,6 +20,8 @@
 #include "timer.h"
 //static const char* TAG = "Timer";
 
+int timercount = 0;
+
 
 void IRAM_ATTR timer0_isr(void *para) {
 
@@ -57,6 +59,8 @@ void IRAM_ATTR timer1_isr(void *para) {
 	pcnt_get_counter_value(PCNT_UNIT_2, &controller_data.count2);
 
 	timer_get_counter_value(TIMER_GROUP_0, TIMER_0, &controller_data.angle_timer);
+	controller_data.t_count = timercount;
+	timercount ++;
 
 	xQueueSendToFrontFromISR(timer_queue, &controller_data, NULL);
 }

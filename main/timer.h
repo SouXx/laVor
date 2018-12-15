@@ -42,6 +42,7 @@ struct controller_evt_t {
 	int16_t count1;
 	int16_t count2;
 	uint64_t angle_timer;
+	int t_count;
 };
 
 

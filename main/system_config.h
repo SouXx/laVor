@@ -17,21 +17,21 @@
 #define BUTTON							(0)
 
 // CONTROLLER CONFIG
-#define CON_SPEED_SETPOINT				(10.0) // Revolutions per second
-#define CON_FREQUENCY					(100.0)// Must be multiple of speed setpoint/1000
-#define CON_P							(0.8187)
-#define CON_I							(19.7757)
+#define CON_SPEED_SETPOINT				(8.0) // Revolutions per second
+#define CON_FREQUENCY					(80.0)// Must be multiple of speed setpoint
+#define CON_P							(0.7767)
+#define CON_I							(19.726)
 #define CON_D							(0.0)
-#define CON_A							(0.08)
+#define CON_A							(0.07)
 
 // MOTOR/MCPWM CONFIG
 #define MOTOR_PWM_OUT_PIN 				(32)
-#define PWM_FREQUENCY					(1000) /* Hz */
+#define PWM_FREQUENCY					(3000) /* Hz */
 #define CAPTURE_RISING					(1)
 #define MCPWM_SELECT_CAP_PIN			(27)
 
 // TIMER CONFIG
-#define TIMER_DIVIDER         			80  //  Hardware timer clock divider
+#define TIMER_DIVIDER         			80  //  Hardware timer clock divider 80 --> 1us -> 1 Countount
 #define TIMER_SCALE           			(TIMER_BASE_CLK / TIMER_DIVIDER)  // convert counter value to seconds
 #define TIMER_INTERVAL1_SEC   			(1.0 / CON_FREQUENCY)
 #define TIMER_INTERVAL0_SEC				(1.0 / CON_SPEED_SETPOINT)
