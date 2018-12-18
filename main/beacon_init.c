@@ -27,7 +27,7 @@ void beacon_salve_init(void) {
 	wait_for_ip();
 	ESP_LOGI(TAG, "done");
 	ESP_LOGI(TAG, "Create UDP listener...");
-	xTaskCreate(udp_server_task, "udp_client", 4096, NULL, 5, NULL);
+	xTaskCreatePinnedToCore(udp_server_task, "udp_client", 4096, NULL, 5, NULL,1);
 	ESP_LOGI(TAG, "Initialize MCPWM module...");
 
 	esp_log_level_set("*", ESP_LOG_INFO);
@@ -68,12 +68,12 @@ void beacon_controller_init(void){
 			//gpio_init();
 			pcnt_init();
 
-			timer_queue = xQueueCreate(1, sizeof(uint16_t));
+			timer_queue = xQueueCreate(1, sizeof(struct controller_evt_t));
 				if( mqttQueue == 0 )
 				    {
 					ESP_LOGI(TAG, "failed to create mqttQueue");
 				    }
-
+			timer0_init();
 			timer1_init();
 }
 

@@ -36,8 +36,23 @@
 
 xQueueHandle timer_queue;
 
+
+
+struct controller_evt_t {
+	int16_t count1;
+	int16_t count2;
+	uint64_t angle_timer;
+	int t_count;
+};
+
+
 void timer1_init();
 void IRAM_ATTR timer_isr(void *para);
+// Controller Timer
+void timer1_init(void);
+// Timer for Angle Setpoit
+void timer0_init(void);
+
 
 
 
