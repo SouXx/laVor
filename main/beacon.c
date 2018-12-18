@@ -134,7 +134,9 @@ void beacon_slave_test_run(void *pvParameters) {
 
 		if (udpQueue != 0) {
 			if (xQueueReceive(udpQueue, &(udp_event), (TickType_t) 10)) {
-				if (udp_event)
+				char data[128] = "LAVOR_SYNC";
+
+				if (udp_event == data)
 				timer0_init();
 				ESP_LOGI(TAG, "timer0 started");
 				}
