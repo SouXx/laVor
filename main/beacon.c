@@ -21,7 +21,7 @@
 static const char* TAG = "Beacon Control";
 
 void beacon_controller(void *pvParameters) {
-	/*
+
 	 //control
 	 beacon_controller_init();
 
@@ -130,7 +130,7 @@ void beacon_controller(void *pvParameters) {
 	 old_count = count;
 
 	 }
-	 */
+
 }
 
 void beacon_slave_run(void *pvParameters) {
