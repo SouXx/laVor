@@ -66,7 +66,7 @@
 
 #define CONFIG_ESP_MAXIMUM_RETRY	(5)
 //#define HOST_IP_ADDR				"192.168.178.165"
-#define HOST_IP_ADDR				"192.168.178.255"
+#define HOST_IP_ADDR				"192.168.2.255"
 #define PORT						(80)
 
 //MQTT
