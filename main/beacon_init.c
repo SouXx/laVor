@@ -39,7 +39,7 @@ void beacon_salve_init(void) {
 	esp_log_level_set("OUTBOX", ESP_LOG_VERBOSE);
 
 	//mqtt_app_start();
-	beacon_controller_init();
+	//beacon_controller_init();
 
 	vTaskDelay(500);
 	ESP_LOGI(TAG, "done");
@@ -89,20 +89,6 @@ void broadcaster_init(void) {
 	xTaskCreatePinnedToCore(udp_client_task, "udp_client", 4096, NULL, 6, NULL,
 					1);
 
-}
-
-void broadcast_re_init(void) {
-	static const char* TAG = "broadcast receiver";
-
-	ESP_LOGI(TAG, "Initialize WIFI...");
-	ESP_ERROR_CHECK(nvs_flash_init());
-	initialise_wifi();
-	wait_for_ip();
-	ESP_LOGI(TAG, "done");
-	ESP_LOGI(TAG, "Create UDP listener...");
-	xTaskCreatePinnedToCore(udp_server_task, "udp_server", 4096, NULL, 5, NULL,
-			1);
-	beacon_controller_init();
 }
 
 void beacon_master_init(void) {

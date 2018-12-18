@@ -122,14 +122,10 @@ void beacon_slave_run(void *pvParameters) {
 
 void beacon_slave_test_run(void *pvParameters) {
 	//control
-	//struct upd_event_t udp_event;
 	esp_mqtt_event_handle_t event;
-
-	double time;
+	unsigned int statrtup_flag = 0;
 	ESP_LOGI(TAG, "Startup");
 	beacon_salve_init();
-	// xTaskCreatePinnedToCore(beacon_controller, "beacon_controller", 4096, NULL, 6, NULL,0);
-	char* data;
 	while (1) {
 
 		if (udpQueue != 0) {
@@ -137,20 +133,24 @@ void beacon_slave_test_run(void *pvParameters) {
 				char data_cmp[128] = "LAVOR_SYNC";
 
 				ESP_LOGI(TAG, "%s", udp_payload.ucData);
-				if (!strcmp(data_cmp, udp_payload.ucData)) {
+				if (!strcmp(data_cmp, udp_payload.ucData) && !statrtup_flag) {
 					timer0_init();
 					ESP_LOGI(TAG, "timer0 started");
+					xTaskCreatePinnedToCore(beacon_controller,
+							"beacon_controller", 4096, NULL, 6, NULL, 0);
+					//at receiver site this task must be the pos. calc task
+					statrtup_flag = 1;
 				}
-
-
 			}
 		}
-		if (mqttQueue != 0) {
-			if (xQueueReceive(mqttQueue, &(event), (TickType_t) 10)) {
-				ESP_LOGI(TAG, "mqtt_received");
-				printf("DATA=%.*s\r\n", event->data_len, event->data);
-				cjson_mc(event->data);
-
+		//implement further logic here
+		if (statrtup_flag) {
+			if (mqttQueue != 0) {
+				if (xQueueReceive(mqttQueue, &(event), (TickType_t) 10)) {
+					ESP_LOGI(TAG, "mqtt_received");
+					printf("DATA=%.*s\r\n", event->data_len, event->data);
+					cjson_mc(event->data);
+				}
 			}
 		}
 
@@ -165,28 +165,6 @@ void broadcaster(void *pvParameters) {
 	while (1) {
 		ESP_LOGI(TAG, "broadcaster");
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
-	}
-	vTaskDelete(NULL);
-
-}
-
-void broadcast_re(void *pvParameters) {
-
-	broadcast_re_init();
-	struct upd_event_t *udp_event;
-	int cnt = 0;
-	while (1) {
-		++cnt;
-		if (udpQueue != 0) {
-			if (xQueueReceive(udpQueue, &(udp_event), (TickType_t) 10)) {
-				ESP_LOGI(TAG, "udp_received");
-				if (cnt % 2 == 0)
-					gpio_set_level(LED, 1);
-				else
-					gpio_set_level(LED, 0);
-			}
-		}
-
 	}
 	vTaskDelete(NULL);
 

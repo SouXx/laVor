@@ -40,7 +40,7 @@ void beacon_salve_init(void);
 void beacon_master_init(void);
 void beacon_controller_init(void);
 void broadcaster_init(void);
-void broadcast_re_init(void);
+
 
 extern esp_mqtt_client_handle_t mqttClient;
 #endif /* MAIN_BEACON_INIT_H_ */
