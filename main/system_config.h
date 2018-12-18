@@ -85,7 +85,7 @@ typedef struct {
 } motor_control_values_t;
 
 struct udp_event_t {
-	int val;
+
 	char ucData[128];
 };
 

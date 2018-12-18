@@ -122,22 +122,22 @@ void beacon_slave_run(void *pvParameters) {
 
 void beacon_slave_test_run(void *pvParameters) {
 	//control
-	struct upd_event_t * udp_event;
+	//struct upd_event_t udp_event;
 	esp_mqtt_event_handle_t event;
 
 	double time;
 	ESP_LOGI(TAG, "Startup");
 	beacon_salve_init();
 	// xTaskCreatePinnedToCore(beacon_controller, "beacon_controller", 4096, NULL, 6, NULL,0);
-	char data[128];
+	char* data;
 	while (1) {
 
 		if (udpQueue != 0) {
-			if (xQueueReceive(udpQueue, &data, (TickType_t) 10)) {
+			if (xQueueReceive(udpQueue, &udp_payload, (TickType_t) 10)) {
 				char data_cmp[128] = "LAVOR_SYNC";
 
-				ESP_LOGI(TAG, "%s", data);
-				if (!strcmp(data_cmp, data)) {
+				ESP_LOGI(TAG, "%s", udp_payload.ucData);
+				if (!strcmp(data_cmp, udp_payload.ucData)) {
 					timer0_init();
 					ESP_LOGI(TAG, "timer0 started");
 				}
