@@ -36,10 +36,11 @@ void beacon_slave_run(void *pvParameters);
 void beacon_slave_test_run(void *pvParameters);
 void beacon_controller(void *pvParameters);
 void broadcaster(void  *pvParameters);
-void broadcast_re(void *pvParameters);
+
+
+struct udp_event_t udp_payload;
 
 extern QueueHandle_t timer_queue;
-
 extern QueueHandle_t udpQueue;
 extern QueueHandle_t mqttQueue;
 extern QueueHandle_t mcQueue;

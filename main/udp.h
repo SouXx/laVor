@@ -24,9 +24,7 @@
 void udp_client_task(void *pvParameters);
 void udp_server_task(void *pvParameters);
 
-struct udp_event_t {
-	char ucData[128];
-} udp_payload;
+struct udp_event_t udp_payload;
 
 QueueHandle_t udpQueue;
 

@@ -166,6 +166,18 @@
             <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
             		
         </scannerConfigBuildInfo>
+        		
+        <scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.cross.base.888086514;cdt.managedbuild.toolchain.gnu.cross.base.888086514.893572894;cdt.managedbuild.tool.gnu.cross.cpp.compiler.494651557;cdt.managedbuild.tool.gnu.cpp.compiler.input.473676353">
+            			
+            <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+            		
+        </scannerConfigBuildInfo>
+        		
+        <scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.cross.base.888086514;cdt.managedbuild.toolchain.gnu.cross.base.888086514.893572894;cdt.managedbuild.tool.gnu.cross.c.compiler.2083447435;cdt.managedbuild.tool.gnu.c.compiler.input.1264758647">
+            			
+            <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+            		
+        </scannerConfigBuildInfo>
         	
     </storageModule>
     
