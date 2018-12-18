@@ -5,6 +5,11 @@
  *      Author: tobi
  */
 
+/*
+ * useful MACROS:
+ * portTICK_PERIOD_MS //devide ticks by portTICK_PERIOD_MS to get a e.g. delay in ms
+ */
+
 #ifndef MAIN_SYSTEM_CONFIG_H_
 #define MAIN_SYSTEM_CONFIG_H_
 
