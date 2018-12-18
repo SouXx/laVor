@@ -49,6 +49,8 @@
 // PCNT CONFIG
 #define PCNT_H_LIM_VAL					(3000)
 #define PCNT_L_LIM_VAL					(0)
+// RECEIVER CONFIG
+#define LASER_R							(21)
 //WIFI
 //wifi malte
 //#define CONFIG_WIFI_SSID			"WILHELM.TEL-1XL2CL11"
