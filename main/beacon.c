@@ -134,13 +134,10 @@ void beacon_slave_test_run(void *pvParameters) {
 
 		if (udpQueue != 0) {
 			if (xQueueReceive(udpQueue, &(udp_event), (TickType_t) 10)) {
-				ESP_LOGI(TAG, "udp_received");
-				timer_pause(TIMER_GROUP_0, TIMER_0);
-				timer_get_counter_time_sec(TIMER_GROUP_0, TIMER_0, &time);
-				timer_set_counter_value(TIMER_GROUP_0, TIMER_0, 0x00000000ULL);
-				timer_start(TIMER_GROUP_0, TIMER_0);
-				ESP_LOGI(TAG, "Time[s] since last reset: %f", time);
-			}
+				if (udp_event)
+				timer0_init();
+				ESP_LOGI(TAG, "timer0 started");
+				}
 		}
 		if (mqttQueue != 0) {
 			if (xQueueReceive(mqttQueue, &(event), (TickType_t) 10)) {
