@@ -84,9 +84,10 @@ typedef struct {
 	float con_a;
 } motor_control_values_t;
 
-typedef struct {
+struct udp_event_t {
+	int val;
 	char ucData[128];
-}udp_event_t;
+};
 
 #define ESP_INTR_FLAG_DEFAULT 0
 

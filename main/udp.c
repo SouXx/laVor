@@ -86,8 +86,8 @@ void udp_server_task(void *pvParameters) {
 				ESP_LOGI(TAG, "%s", rx_buffer);
 				strcpy(udp_payload.ucData, rx_buffer);
 
-				udp_event = &udp_payload;
-				if (xQueueSend(udpQueue, (void * ) &udp_event,
+				//udp_event = &udp_payload;
+				if (xQueueSend(udpQueue, &udp_payload,
 						(TickType_t ) 10) != pdPASS) {
 					ESP_LOGI(TAG, "Queue push failed");
 				}

@@ -46,8 +46,9 @@ struct controller_evt_t {
 };
 
 
-void timer1_init();
-void IRAM_ATTR timer_isr(void *para);
+void IRAM_ATTR timer0_isr(void *para);
+void IRAM_ATTR timer1_isr(void *para);
+
 // Controller Timer
 void timer1_init(void);
 // Timer for Angle Setpoit

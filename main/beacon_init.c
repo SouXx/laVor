@@ -38,7 +38,8 @@ void beacon_salve_init(void) {
 	esp_log_level_set("TRANSPORT", ESP_LOG_VERBOSE);
 	esp_log_level_set("OUTBOX", ESP_LOG_VERBOSE);
 
-	mqtt_app_start();
+	//mqtt_app_start();
+	beacon_controller_init();
 
 	vTaskDelay(500);
 	ESP_LOGI(TAG, "done");
@@ -73,7 +74,7 @@ void beacon_controller_init(void) {
 		ESP_LOGI(TAG, "failed to create mqttQueue");
 	}
 	//timer0_init();
-	timer1_init();
+	//timer1_init();
 }
 
 void broadcaster_init(void) {
