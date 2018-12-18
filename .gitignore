@@ -7,3 +7,5 @@ sdkconfig.old
 .project
 .cproject
 .settings/
+make/
+projekt.mk
