@@ -15,24 +15,28 @@
 
 #include "lavor_main.h"
 
+static const char *TAG = "[lavor_main]";
+
 void app_main() {
-	printf("Hello world!\n");
+
 
 	/* Print chip information */
 	esp_chip_info_t chip_info;
 
 	esp_chip_info(&chip_info);
-	printf("This is ESP32 chip with %d CPU cores, WiFi%s%s, ", chip_info.cores,
+	ESP_LOGI(TAG, "This is ESP32 chip with %d CPU cores, WiFi%s%s, ", chip_info.cores,
 			(chip_info.features & CHIP_FEATURE_BT) ? "/BT" : "",
 			(chip_info.features & CHIP_FEATURE_BLE) ? "/BLE" : "");
-	printf("silicon revision %d, ", chip_info.revision);
+	ESP_LOGI(TAG, "silicon revision %d, ", chip_info.revision);
 
-	printf("%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
+	ESP_LOGI(TAG, "%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
 			(chip_info.features & CHIP_FEATURE_EMB_FLASH) ?
 					"embedded" : "external");
 
-	xTaskCreatePinnedToCore(beacon_slave_test_run, "beacon_slave_test_run", 4096, NULL, 5, NULL,1);
-	xTaskCreatePinnedToCore(beacon_controller, "beacon_controller", 4096, NULL, 6, NULL,0);
+//	xTaskCreatePinnedToCore(beacon_slave_test_run, "beacon_slave_test_run", 4096, NULL, 5, NULL,1);
+//	xTaskCreatePinnedToCore(beacon_controller, "beacon_controller", 4096, NULL, 6, NULL,0);
+	xTaskCreatePinnedToCore(broadcaster, "broadcaster", 4096, NULL, 6, NULL,0);
+
 
 	while (1) {
 		vTaskDelay(500);

@@ -19,7 +19,7 @@
 #include "udp.h"
 
 static const char *TAG = "UDP";
-static const char *payload = "Message from ESP32 ";
+static const char *payload = "LAVOR_SYNC";
 
 void udp_server_task(void *pvParameters) {
 	char rx_buffer[128];
@@ -160,7 +160,7 @@ void udp_client_task(void *pvParameters) {
 				ESP_LOGI(TAG, "%s", rx_buffer);
 			}
 
-			vTaskDelay(2000 / portTICK_PERIOD_MS);
+			//vTaskDelay(1000 / portTICK_PERIOD_MS);
 		}
 
 		if (sock != -1) {

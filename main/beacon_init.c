@@ -27,7 +27,7 @@ void beacon_salve_init(void) {
 	wait_for_ip();
 	ESP_LOGI(TAG, "done");
 	ESP_LOGI(TAG, "Create UDP listener...");
-	xTaskCreatePinnedToCore(udp_server_task, "udp_client", 4096, NULL, 5, NULL,1);
+	xTaskCreatePinnedToCore(udp_server_task, "udp_server", 4096, NULL, 5, NULL,1);
 	ESP_LOGI(TAG, "Initialize MCPWM module...");
 
 	esp_log_level_set("*", ESP_LOG_INFO);
@@ -76,7 +76,17 @@ void beacon_controller_init(void){
 			timer0_init();
 			timer1_init();
 }
+void broadcaster_init(void) {
+	static const char* TAG = "[broadcaster]";
 
+	ESP_LOGI(TAG, "Initialize WIFI...");
+	ESP_ERROR_CHECK(nvs_flash_init());
+	initialise_wifi();
+	wait_for_ip();
+	ESP_LOGI(TAG, "done");
+	ESP_LOGI(TAG, "Create UDP socket...");
+	xTaskCreatePinnedToCore(udp_client_task, "udp_client", 4096, NULL, 5, NULL,1);
+}
 void beacon_master_init(void) {
 	// so much space to fill
 }

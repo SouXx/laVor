@@ -35,6 +35,7 @@
 void beacon_slave_run(void *pvParameters);
 void beacon_slave_test_run(void *pvParameters);
 void beacon_controller(void *pvParameters);
+void broadcaster(void  *pvParameters);
 
 extern QueueHandle_t timer_queue;
 
