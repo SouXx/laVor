@@ -27,7 +27,8 @@ void beacon_salve_init(void) {
 	wait_for_ip();
 	ESP_LOGI(TAG, "done");
 	ESP_LOGI(TAG, "Create UDP listener...");
-	xTaskCreatePinnedToCore(udp_server_task, "udp_server", 4096, NULL, 5, NULL,1);
+	xTaskCreatePinnedToCore(udp_server_task, "udp_server", 4096, NULL, 5, NULL,
+			1);
 	ESP_LOGI(TAG, "Initialize MCPWM module...");
 
 	esp_log_level_set("*", ESP_LOG_INFO);
@@ -43,39 +44,38 @@ void beacon_salve_init(void) {
 	ESP_LOGI(TAG, "done");
 }
 
-void beacon_controller_init(void){
+void beacon_controller_init(void) {
 
 	static const char* TAG = "beacon_controller";
 
-
 	// ONBOARD LED
-		 gpio_config_t io_conf;
-		 	io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
-		    //set as output mode
-		    io_conf.mode = GPIO_MODE_OUTPUT;
-		    //bit mask of the pins that you want to set,e.g.GPIO18/19
-		    io_conf.pin_bit_mask = (1ULL<<LED);
-		    //disable pull-down mode
-		    io_conf.pull_down_en = 0;
-		    //disable pull-up mode
-		    io_conf.pull_up_en = 0;
-		    //configure GPIO with the given settings
-		gpio_config(&io_conf);
+	gpio_config_t io_conf;
+	io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
+	//set as output mode
+	io_conf.mode = GPIO_MODE_OUTPUT;
+	//bit mask of the pins that you want to set,e.g.GPIO18/19
+	io_conf.pin_bit_mask = (1ULL << LED);
+	//disable pull-down mode
+	io_conf.pull_down_en = 0;
+	//disable pull-up mode
+	io_conf.pull_up_en = 0;
+	//configure GPIO with the given settings
+	gpio_config(&io_conf);
 
-		pwm_init();
-			vTaskDelay(1000/portTICK_PERIOD_MS);
+	pwm_init();
+	vTaskDelay(1000 / portTICK_PERIOD_MS);
 
-			//gpio_init();
-			pcnt_init();
+	//gpio_init();
+	pcnt_init();
 
-			timer_queue = xQueueCreate(1, sizeof(struct controller_evt_t));
-				if( mqttQueue == 0 )
-				    {
-					ESP_LOGI(TAG, "failed to create mqttQueue");
-				    }
-			timer0_init();
-			timer1_init();
+	timer_queue = xQueueCreate(1, sizeof(struct controller_evt_t));
+	if (mqttQueue == 0) {
+		ESP_LOGI(TAG, "failed to create mqttQueue");
+	}
+	//timer0_init();
+	timer1_init();
 }
+
 void broadcaster_init(void) {
 	static const char* TAG = "[broadcaster]";
 
@@ -85,8 +85,25 @@ void broadcaster_init(void) {
 	wait_for_ip();
 	ESP_LOGI(TAG, "done");
 	ESP_LOGI(TAG, "Create UDP socket...");
-	xTaskCreatePinnedToCore(udp_client_task, "udp_client", 4096, NULL, 5, NULL,1);
+	xTaskCreatePinnedToCore(udp_client_task, "udp_client", 4096, NULL, 6, NULL,
+					1);
+
 }
+
+void broadcast_re_init(void) {
+	static const char* TAG = "broadcast receiver";
+
+	ESP_LOGI(TAG, "Initialize WIFI...");
+	ESP_ERROR_CHECK(nvs_flash_init());
+	initialise_wifi();
+	wait_for_ip();
+	ESP_LOGI(TAG, "done");
+	ESP_LOGI(TAG, "Create UDP listener...");
+	xTaskCreatePinnedToCore(udp_server_task, "udp_server", 4096, NULL, 5, NULL,
+			1);
+	beacon_controller_init();
+}
+
 void beacon_master_init(void) {
 	// so much space to fill
 }

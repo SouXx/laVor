@@ -22,90 +22,91 @@ static const char* TAG = "Beacon Control";
 
 void beacon_controller(void *pvParameters) {
 
-	 //control
-	 beacon_controller_init();
+	//control
+	beacon_controller_init();
 
-	 motor_control_values_t newMCValues;
-	 // Berechnet die Schrittweite für Lageregler
-	 //	        mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A, y); // "Anschubsen"
-	 //	    	vTaskDelay(100/portTICK_PERIOD_MS);
+	motor_control_values_t newMCValues;
+	// Berechnet die Schrittweite für Lageregler
+	//	        mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A, y); // "Anschubsen"
+	//	    	vTaskDelay(100/portTICK_PERIOD_MS);
 
-	 // Werte für Regler, update später über MQTT!
-	 int s_setpoint = (int)(ENCODER_CPR*CON_SPEED_SETPOINT/CON_FREQUENCY); //		1600*8/80 = 160
-	 float p = CON_P;
-	 float i = CON_I;
-	 float d = CON_D;
-	 float a = CON_A;
+	// Werte für Regler, update später über MQTT!
+	int s_setpoint = (int) (ENCODER_CPR * CON_SPEED_SETPOINT / CON_FREQUENCY); //		1600*8/80 = 160
+	float p = CON_P;
+	float i = CON_I;
+	float d = CON_D;
+	float a = CON_A;
 
-	 int angle_factor = (1000000.0/(CON_SPEED_SETPOINT * ENCODER_CPR));
-	 int a_setpoint = 0;
+	int angle_factor = (1000000.0 / (CON_SPEED_SETPOINT * ENCODER_CPR));
+	int a_setpoint = 0;
 
-	 int s_e_sum = 0;
-	 int s_e_old = 0;
-	 float y = 20.0;
-	 int speed = 0;
-	 // Ziele für Queues
-	 // uint32_t capture = 0;
-	 int count = 0;
-	 int old_count = 0;
-	 int limit_setpoint = 0;
-	 //mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A, y); // "Anschubsen"
-	 //vTaskDelay(100/portTICK_PERIOD_MS);
+	int s_e_sum = 0;
+	int s_e_old = 0;
+	float y = 20.0;
+	int speed = 0;
+	// Ziele für Queues
+	// uint32_t capture = 0;
+	int count = 0;
+	int old_count = 0;
+	int limit_setpoint = 0;
+	//mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A, y); // "Anschubsen"
+	//vTaskDelay(100/portTICK_PERIOD_MS);
 
-	 struct controller_evt_t controller_data;
+	struct controller_evt_t controller_data;
 
-	 // Werte für Regler konvertieren
+	// Werte für Regler konvertieren
 
+	while (1) {
 
-	 while (1) {
+		xQueueReceive(timer_queue, &controller_data, portMAX_DELAY);
+		// Capture erstmal außer Betrieb...
+		//xQueueReceive(cap_queue, &capture, 0);
+		//if(capture > 0 ) speed = (4000000000 / capture) * 2; //Speed in mHz
 
+		count = controller_data.count1 + controller_data.count2;
+		speed = count - old_count;
+		if (speed < 0)
+			speed += ENCODER_CPR;
+		if (speed > 200)
+			speed = s_setpoint;
 
-	 xQueueReceive(timer_queue, &controller_data, portMAX_DELAY);
-	 // Capture erstmal außer Betrieb...
-	 //xQueueReceive(cap_queue, &capture, 0);
-	 //if(capture > 0 ) speed = (4000000000 / capture) * 2; //Speed in mHz
+		a_setpoint = controller_data.angle_timer / angle_factor;
+		int a_e = a_setpoint - count;
+		if (a_e > 800)
+			a_e -= 1600;
+		if (a_e <= -800)
+			a_e += 1600;
 
-	 count = controller_data.count1 + controller_data.count2;
-	 speed = count - old_count;
-	 if (speed < 0) speed += ENCODER_CPR;
-	 if (speed > 200) speed = s_setpoint;
+		if (limit_setpoint < s_setpoint) {
+			limit_setpoint++;
+			a_e = 0;
+		}
 
+		// float s_e = (s_setpoint*16) - speed + (a_e * a) ; // Regelfehler berechnen
 
-	 a_setpoint = controller_data.angle_timer/angle_factor;
-	 int a_e = a_setpoint - count;
-	 if (a_e > 800) a_e -= 1600;
-	 if (a_e <= -800) a_e += 1600;
+		int s_e = (limit_setpoint) - speed + (int) (a_e * a); // Regelfehler berechnen
 
-	 if (limit_setpoint < s_setpoint){
-	 limit_setpoint ++;
-	 a_e = 0;
-	 }
+		if (y < 100.0)
+			s_e_sum += s_e; //Integrierer Begrenzt wenn Limit der Stellgröße erreicht(ANTI-WINDUP)
+		y = (p * (float) s_e) + (i / CON_FREQUENCY * (float) s_e_sum)
+				+ d * CON_FREQUENCY * (float) (s_e - s_e_old);
 
-	 // float s_e = (s_setpoint*16) - speed + (a_e * a) ; // Regelfehler berechnen
+		// Begrenzung für Duty-Cycle
+		if (y >= 100.0)
+			y = 100.0;
+		if (y < 0.0)
+			y = 0.0;
 
-	 int s_e = (limit_setpoint) - speed + (int)(a_e * a); // Regelfehler berechnen
+		mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A, y);
 
+		printf("%d \t %f \t %d \n", a_e, y, controller_data.t_count);
+		//printf("Speed: ");
+		//printf("%d \n", speed);
 
-	 if (y < 100.0) s_e_sum += s_e; //Integrierer Begrenzt wenn Limit der Stellgröße erreicht(ANTI-WINDUP)
-	 y = (p*(float)s_e) + (i/CON_FREQUENCY*(float)s_e_sum) + d*CON_FREQUENCY*(float)(s_e - s_e_old) ;
+		s_e_old = s_e;
+		old_count = count;
 
-	 // Begrenzung für Duty-Cycle
-	 if(y >= 100.0) y = 100.0;
-	 if(y < 0.0) y = 0.0;
-
-	 mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A,y);
-
-
-
-	 printf("%d \t %f \t %d \n",a_e,y,controller_data.t_count);
-	 //printf("Speed: ");
-	 //printf("%d \n", speed);
-
-
-	 s_e_old = s_e;
-	 old_count = count;
-
-	 }
+	}
 
 }
 
@@ -127,6 +128,7 @@ void beacon_slave_test_run(void *pvParameters) {
 	double time;
 	ESP_LOGI(TAG, "Startup");
 	beacon_salve_init();
+	xTaskCreatePinnedToCore(beacon_controller, "beacon_controller", 4096, NULL, 6, NULL,0);
 
 	while (1) {
 
@@ -157,11 +159,33 @@ void beacon_slave_test_run(void *pvParameters) {
 void broadcaster(void *pvParameters) {
 
 	broadcaster_init();
-
 	while (1) {
 		ESP_LOGI(TAG, "broadcaster");
-		vTaskDelay(500 / portTICK_PERIOD_MS);
+		vTaskDelay(1000 / portTICK_PERIOD_MS);
 	}
 	vTaskDelete(NULL);
 
 }
+
+void broadcast_re(void *pvParameters) {
+
+	broadcast_re_init();
+	struct upd_event_t *udp_event;
+	int cnt = 0;
+	while (1) {
+		++cnt;
+		if (udpQueue != 0) {
+			if (xQueueReceive(udpQueue, &(udp_event), (TickType_t) 10)) {
+				ESP_LOGI(TAG, "udp_received");
+				if (cnt % 2 == 0)
+					gpio_set_level(LED, 1);
+				else
+					gpio_set_level(LED, 0);
+			}
+		}
+
+	}
+	vTaskDelete(NULL);
+
+}
+

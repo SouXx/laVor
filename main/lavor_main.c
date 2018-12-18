@@ -34,8 +34,8 @@ void app_main() {
 					"embedded" : "external");
 
 //	xTaskCreatePinnedToCore(beacon_slave_test_run, "beacon_slave_test_run", 4096, NULL, 5, NULL,1);
-//	xTaskCreatePinnedToCore(beacon_controller, "beacon_controller", 4096, NULL, 6, NULL,0);
-	xTaskCreatePinnedToCore(broadcaster, "broadcaster", 4096, NULL, 6, NULL,0);
+//	xTaskCreatePinnedToCore(broadcaster, "broadcaster", 4096, NULL, 6, NULL,0);
+	xTaskCreatePinnedToCore(broadcast_re, "broadcast_re", 4096, NULL, 6, NULL,0);
 
 
 	while (1) {
