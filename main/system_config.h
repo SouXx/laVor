@@ -39,7 +39,7 @@
 #define TIMER_DIVIDER         			80  //  Hardware timer clock divider 80 --> 1us -> 1 Countount
 #define TIMER_SCALE           			(TIMER_BASE_CLK / TIMER_DIVIDER)  // convert counter value to seconds
 #define TIMER_INTERVAL1_SEC   			(1.0 / CON_FREQUENCY)
-#define TIMER_INTERVAL0_SEC				(1.0 / CON_SPEED_SETPOINT)
+#define TIMER_INTERVAL0_SEC				(0.001)
 
 // ENCODER CONFIG
 #define ENCODER_CPR						(1600)

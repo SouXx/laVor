@@ -28,7 +28,7 @@ void udp_server_task(void *pvParameters) {
 	int ip_protocol;
 
 	struct upd_event_t *udp_event;
-	udpQueue = xQueueCreate(10, sizeof(struct udp_event_t*));
+	udpQueue = xQueueCreate(10, sizeof(char[128]));
 	if( udpQueue == 0 )
 	    {
 		ESP_LOGI(TAG, "failed to create udpQueue");
@@ -84,10 +84,10 @@ void udp_server_task(void *pvParameters) {
 				rx_buffer[len] = 0; // Null-terminate whatever we received and treat like a string...
 				ESP_LOGI(TAG, "Received %d bytes from %s:", len, addr_str);
 				ESP_LOGI(TAG, "%s", rx_buffer);
-				strcpy(udp_payload.ucData, rx_buffer);
+				//strcpy(udp_payload.ucData, rx_buffer);
 
 				//udp_event = &udp_payload;
-				if (xQueueSend(udpQueue, &udp_payload,
+				if (xQueueSend(udpQueue, rx_buffer,
 						(TickType_t ) 10) != pdPASS) {
 					ESP_LOGI(TAG, "Queue push failed");
 				}

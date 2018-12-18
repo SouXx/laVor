@@ -129,18 +129,19 @@ void beacon_slave_test_run(void *pvParameters) {
 	ESP_LOGI(TAG, "Startup");
 	beacon_salve_init();
 	// xTaskCreatePinnedToCore(beacon_controller, "beacon_controller", 4096, NULL, 6, NULL,0);
-
+	char data[128];
 	while (1) {
 
 		if (udpQueue != 0) {
-			if (xQueueReceive(udpQueue, &udp_event, (TickType_t) 10)) {
-				char data[128];// = "LAVOR_SYNC";
-				strcpy(data, udp_event->ucData);
+			if (xQueueReceive(udpQueue, &data, (TickType_t) 10)) {
+				char data_cmp[128] = "LAVOR_SYNC";
+
 				ESP_LOGI(TAG, "%s", data);
-		/*		if (strcmp(udp_event.ucData, data)) {
+				if (!strcmp(data_cmp, data)) {
 					timer0_init();
 					ESP_LOGI(TAG, "timer0 started");
-				}*/
+				}
+
 
 			}
 		}
