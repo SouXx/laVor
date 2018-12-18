@@ -35,8 +35,9 @@ void app_main() {
 
 //	xTaskCreatePinnedToCore(beacon_slave_test_run, "beacon_slave_test_run", 4096, NULL, 5, NULL,1);
 //	xTaskCreatePinnedToCore(broadcaster, "broadcaster", 4096, NULL, 6, NULL,0);
-	xTaskCreatePinnedToCore(broadcast_re, "broadcast_re", 4096, NULL, 6, NULL,0);
+//	xTaskCreatePinnedToCore(broadcast_re, "broadcast_re", 4096, NULL, 6, NULL,0);
 
+	xTaskCreatePinnedToCore(receiver_run, "receiver_run", 4096, NULL, 5, NULL,1);
 
 	while (1) {
 		vTaskDelay(500);

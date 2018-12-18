@@ -21,6 +21,10 @@
 #include "timer.h"
 #include "mqtt.h"
 #include "pcnt.h"
+#include "receiver.h"
+
+QueueHandle_t receiver_queue;
+
 
 
 void receiver_init(void);

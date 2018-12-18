@@ -7,10 +7,26 @@
 
 #include "receiver_init.h"
 
+static const char* TAG = "Receiver_Init";
+
+
+void IRAM_ATTR rx_isr_handler(void* arg){
+
+	uint64_t timer_value = 0;
+	timer_get_counter_value(TIMER_GROUP_0, TIMER_0, &timer_value);
+	xQueueSendFromISR(receiver_queue, &timer_value, NULL);
+
+
+
+}
+
+
+
 
 void receiver_init(void){
 
-	static const char* TAG = "receiver_init";
+	static const char* TAG = "Receiver_Init";
+
 
 		// ONBOARD LED
 		gpio_config_t io_conf;
@@ -45,5 +61,11 @@ void receiver_init(void){
 		//hook isr handler for specific gpio pin
 		gpio_isr_handler_add(LASER_RX, rx_isr_handler, (void*) LASER_RX);
 
+
+		receiver_queue = xQueueCreate(10, sizeof(uint64_t));
+
+		timer0_init();
+
+		ESP_LOGI(TAG,"Init Done!");
 
 }
