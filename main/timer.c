@@ -21,6 +21,7 @@
 //static const char* TAG = "Timer";
 
 int timercount = 0;
+int led_count = 0;
 
 
 void IRAM_ATTR timer0_isr(void *para) {
@@ -34,7 +35,8 @@ void IRAM_ATTR timer0_isr(void *para) {
 
 	/* Now just send the event data back to the main program task */
 	// ESP_LOGI(TAG, "ISR Done");
-
+	gpio_set_level(LED, led_count % 2);
+	led_count ++;
 }
 
 

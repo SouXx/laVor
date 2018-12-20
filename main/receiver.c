@@ -34,8 +34,10 @@ void receiver_calc(int cap1, int cap2) {
 	float xp = -1.0;
 	float yp = -1.0;
 
-	float m1 = 1.0 / tan((float) cap1 * 5.0265e-5);
-	float m2 = 1.0 / tan((float) cap1 * 5.0265e-5);
+	float m1 = 1.0 / tan( (float)cap1 * 5.0265e-5);
+	float m2 = 1.0 / tan( (float)cap2 * 5.0265e-5);
+
+	printf("M1: %f M2: %f \n", m1, m2);
 
 	// Beacon 1 and Beacon 2
 	if (cap1 >= 0 && cap1 < 31250 && cap2 >= 31250 && cap2 < 62500) {
@@ -58,7 +60,7 @@ void receiver_calc(int cap1, int cap2) {
 		ESP_LOGW(TAG, "Values out of Range!");
 	}
 
-	printf("Position: X= %f  Y= %f",xp,yp);
+	printf("Position: X= %f  Y= %f \n",xp,yp);
 
 }
 
@@ -79,7 +81,9 @@ void receiver_run(void) {
 		capture = (int) timer_value;
 		printf("Capture: %d \n", capture);
 
-		receiver_calc(15625,102960);
+		receiver_calc(capture,last_capture);
+
+		last_capture = capture;
 
 	}
 
