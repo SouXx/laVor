@@ -74,7 +74,7 @@ void beacon_controller_init(void) {
 		ESP_LOGI(TAG, "failed to create mqttQueue");
 	}
 	//timer0_init();
-	//timer1_init();
+	timer1_init();
 }
 
 void broadcaster_init(void) {
