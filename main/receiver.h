@@ -36,10 +36,11 @@
 #include "mqtt.h"
 #include "pcnt.h"
 #include "receiver.h"
+#include <math.h>
 
 extern QueueHandle_t receiver_queue;
 
-
+void receiver_calc(int cap1, int cap2);
 void receiver_run(void);
 
 #endif /* MAIN_RECEIVER_H_ */

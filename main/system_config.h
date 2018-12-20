@@ -17,6 +17,17 @@
 #define CONFIG_LOG_DEFAULT_LEVEL	ESP_LOG_INFO
 #endif //CONFIG_LOG_DEFAULT_LEVEL
 
+// SYSTEM CONFIG
+
+#define BEACON_1_X	(0)
+#define BEACON_1_Y	(0)
+#define BEACON_2_X	(0)
+#define BEACON_2_Y	(2000)
+#define BEACON_3_X	(3000)
+#define BEACON_3_Y	(0)
+
+
+
 //ONBAORD CONFIG
 #define LED 							(2)
 #define BUTTON							(0)
@@ -38,7 +49,7 @@
 // TIMER CONFIG
 #define TIMER_DIVIDER         			80  //  Hardware timer clock divider 80 --> 1us -> 1 Countount
 #define TIMER_SCALE           			(TIMER_BASE_CLK / TIMER_DIVIDER)  // convert counter value to seconds
-#define TIMER_INTERVAL1_SEC   			(1.0 / CON_FREQUENCY)
+#define TIMER_INTERVAL1_SEC   			(4.0) //(1.0 / CON_FREQUENCY)
 #define TIMER_INTERVAL0_SEC				(1.0 / CON_SPEED_SETPOINT)
 
 // ENCODER CONFIG
