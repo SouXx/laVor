@@ -29,5 +29,7 @@
 
 #include "beacon.h"
 #include "beacon_init.h"
+#include "receiver.h"
+#include "receiver_init.h"
 
 #endif /* MAIN_LAVOR_MAIN_H_ */

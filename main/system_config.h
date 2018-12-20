@@ -17,6 +17,17 @@
 #define CONFIG_LOG_DEFAULT_LEVEL	ESP_LOG_INFO
 #endif //CONFIG_LOG_DEFAULT_LEVEL
 
+// SYSTEM CONFIG
+
+#define BEACON_1_X	(0)
+#define BEACON_1_Y	(0)
+#define BEACON_2_X	(0)
+#define BEACON_2_Y	(2000)
+#define BEACON_3_X	(3000)
+#define BEACON_3_Y	(0)
+
+
+
 //ONBAORD CONFIG
 #define LED 							(2)
 #define BUTTON							(0)
@@ -49,6 +60,10 @@
 // PCNT CONFIG
 #define PCNT_H_LIM_VAL					(3000)
 #define PCNT_L_LIM_VAL					(0)
+// RECEIVER CONFIG
+#define LASER_RX							(0)
+#define INTR_DELAY 						(5000)
+
 //WIFI
 //wifi malte
 //#define CONFIG_WIFI_SSID			"WILHELM.TEL-1XL2CL11"

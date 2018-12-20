@@ -54,9 +54,10 @@ void beacon_controller(void *pvParameters) {
 
 	struct controller_evt_t controller_data;
 
-	// Werte für Regler konvertieren
 
-	while (1) {
+
+		while (1) {
+
 
 		xQueueReceive(timer_queue, &controller_data, portMAX_DELAY);
 		// Capture erstmal außer Betrieb...
@@ -82,26 +83,18 @@ void beacon_controller(void *pvParameters) {
 			a_e = 0;
 		}
 
-		// float s_e = (s_setpoint*16) - speed + (a_e * a) ; // Regelfehler berechnen
 
 		int s_e = (limit_setpoint) - speed + (int) (a_e * a); // Regelfehler berechnen
+			        if (y < 100.0) s_e_sum += s_e; //Integrierer Begrenzt wenn Limit der Stellgröße erreicht(ANTI-WINDUP)
+			        y = (p*(float)s_e) + (i/CON_FREQUENCY*(float)s_e_sum) + d*CON_FREQUENCY*(float)(s_e - s_e_old) ;
 
-		if (y < 100.0)
-			s_e_sum += s_e; //Integrierer Begrenzt wenn Limit der Stellgröße erreicht(ANTI-WINDUP)
-		y = (p * (float) s_e) + (i / CON_FREQUENCY * (float) s_e_sum)
-				+ d * CON_FREQUENCY * (float) (s_e - s_e_old);
+			        // Begrenzung für Duty-Cycle
+			        if(y >= 100.0) y = 100.0;
+			        if(y < 0.0) y = 0.0;
 
-		// Begrenzung für Duty-Cycle
-		if (y >= 100.0)
-			y = 100.0;
-		if (y < 0.0)
-			y = 0.0;
+			        mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A,y);
 
-		mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A, y);
 
-		printf("%d \t %f \t %d \n", a_e, y, controller_data.t_count);
-		//printf("Speed: ");
-		//printf("%d \n", speed);
 
 		s_e_old = s_e;
 		old_count = count;
