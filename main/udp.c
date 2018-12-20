@@ -143,22 +143,22 @@ void udp_client_task(void *pvParameters) {
 			}
 			ESP_LOGI(TAG, "Message sent");
 
-			struct sockaddr_in sourceAddr; // Large enough for both IPv4 or IPv6
-			socklen_t socklen = sizeof(sourceAddr);
-			int len = recvfrom(sock, rx_buffer, sizeof(rx_buffer) - 1, 0,
-					(struct sockaddr *) &sourceAddr, &socklen);
-
-			// Error occured during receiving
-			if (len < 0) {
-				ESP_LOGE(TAG, "recvfrom failed: errno %d", errno);
-				break;
-			}
-			// Data received
-			else {
-				rx_buffer[len] = 0; // Null-terminate whatever we received and treat like a string
-				ESP_LOGI(TAG, "Received %d bytes from %s:", len, addr_str);
-				ESP_LOGI(TAG, "%s", rx_buffer);
-			}
+//			struct sockaddr_in sourceAddr; // Large enough for both IPv4 or IPv6
+//			socklen_t socklen = sizeof(sourceAddr);
+//			int len = recvfrom(sock, rx_buffer, sizeof(rx_buffer) - 1, 0,
+//					(struct sockaddr *) &sourceAddr, &socklen);
+//
+//			// Error occured during receiving
+//			if (len < 0) {
+//				ESP_LOGE(TAG, "recvfrom failed: errno %d", errno);
+//				break;
+//			}
+//			// Data received
+//			else {
+//				rx_buffer[len] = 0; // Null-terminate whatever we received and treat like a string
+//				ESP_LOGI(TAG, "Received %d bytes from %s:", len, addr_str);
+//				ESP_LOGI(TAG, "%s", rx_buffer);
+//			}
 
 			vTaskDelay(1000 / portTICK_PERIOD_MS);
 		}

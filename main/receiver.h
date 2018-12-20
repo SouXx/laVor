@@ -21,22 +21,17 @@
 #ifndef MAIN_RECEIVER_H_
 #define MAIN_RECEIVER_H_
 
+#include "system_include.h"
 
 #include "lavor_main.h"
-
-
-#include "esp_err.h"
-
-
 #include "wifi.h"
 #include "mcpwm.h"
 #include "udp.h"
-#include "system_config.h"
 #include "timer.h"
 #include "mqtt.h"
 #include "pcnt.h"
 #include "receiver.h"
-#include <math.h>
+
 
 extern QueueHandle_t receiver_queue;
 

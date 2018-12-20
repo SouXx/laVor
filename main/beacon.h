@@ -20,15 +20,10 @@
 #ifndef MAIN_BEACON_H_
 #define MAIN_BEACON_H_
 
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "esp_system.h"
-#include "esp_spi_flash.h"
-
+#include "system_include.h"
 #include "lavor_main.h"
 #include "beacon_init.h"
 #include "lavor_cJSON.h"
-#include "system_config.h"
 #include "udp.h"
 #include "timer.h"
 
@@ -38,7 +33,7 @@ void beacon_controller(void *pvParameters);
 void broadcaster(void  *pvParameters);
 
 
-struct udp_event_t udp_payload;
+//struct udp_event_t udp_payload;
 
 extern QueueHandle_t timer_queue;
 extern QueueHandle_t udpQueue;

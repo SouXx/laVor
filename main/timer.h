@@ -20,21 +20,7 @@
 #ifndef MAIN_TIMER_H_
 #define MAIN_TIMER_H_
 
-#include <stdio.h>
-#include "esp_types.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "freertos/queue.h"
-#include "soc/gpio_sig_map.h"
-#include "soc/timer_group_struct.h"
-#include "driver/periph_ctrl.h"
-#include "driver/timer.h"
-#include "driver/pcnt.h"
-#include "system_config.h"
-#include "esp_system.h"
-
-
-
+#include "system_include.h"
 
 xQueueHandle timer_queue;
 

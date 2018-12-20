@@ -2,10 +2,8 @@
  * system_config.h
  *MOST CODE IS BASED ON EXAMPLES FROM https://github.com/espressif/esp-idf
  *  Created on: Nov 2, 2018
- *      Author: tobi
- */
-
-/*
+ *      Author: Tobias Frahm
+ *
  * useful MACROS:
  * portTICK_PERIOD_MS //devide ticks by portTICK_PERIOD_MS to get a e.g. delay in ms
  */
@@ -21,8 +19,9 @@
 
 // Define BEACON or RECEIVER!!
 
-#define RECEIVER
+//#define RECEIVER
 //#define BEACON
+#define BROADCASTER
 
 #define BEACON_1_X	(0)
 #define BEACON_1_Y	(0)

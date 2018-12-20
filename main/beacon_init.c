@@ -78,6 +78,7 @@ void beacon_controller_init(void) {
 }
 
 void broadcaster_init(void) {
+
 	static const char* TAG = "[broadcaster]";
 
 	ESP_LOGI(TAG, "Initialize WIFI...");
@@ -85,9 +86,10 @@ void broadcaster_init(void) {
 	initialise_wifi();
 	wait_for_ip();
 	ESP_LOGI(TAG, "done");
-	ESP_LOGI(TAG, "Create UDP socket...");
+	ESP_LOGI(TAG, "Create UDP Client...");
+
 	xTaskCreatePinnedToCore(udp_client_task, "udp_client", 4096, NULL, 6, NULL,
-					1);
+			1);
 
 }
 

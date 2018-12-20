@@ -8,12 +8,10 @@
 #ifndef MAIN_RECEIVER_INIT_H_
 #define MAIN_RECEIVER_INIT_H_
 
+
+#include "system_include.h"
+
 #include "lavor_main.h"
-
-
-#include "esp_err.h"
-
-
 #include "wifi.h"
 #include "mcpwm.h"
 #include "udp.h"

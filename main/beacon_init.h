@@ -21,12 +21,9 @@
 #define MAIN_BEACON_INIT_H_
 //home/tobi/esp/esp-idf/components/driver/include/driver
 
+#include "system_include.h"
+
 #include "lavor_main.h"
-
-
-#include "esp_err.h"
-
-
 #include "wifi.h"
 #include "mcpwm.h"
 #include "udp.h"
@@ -34,7 +31,6 @@
 #include "timer.h"
 #include "mqtt.h"
 #include "pcnt.h"
-
 
 void beacon_salve_init(void);
 void beacon_master_init(void);

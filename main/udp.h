@@ -8,18 +8,8 @@
 #ifndef MAIN_UDP_H_
 #define MAIN_UDP_H_
 
-#include <string.h>
-#include "lwip/err.h"
-#include "lwip/sockets.h"
-#include "lwip/sys.h"
-#include "lwip/err.h"
-#include <lwip/netdb.h>
-#include <sys/param.h>
+#include "system_include.h"
 
-#include "esp_log.h"
-#include "freertos/queue.h"
-
-#include "system_config.h"
 
 void udp_client_task(void *pvParameters);
 void udp_server_task(void *pvParameters);

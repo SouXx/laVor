@@ -32,10 +32,10 @@ void app_main() {
 	ESP_LOGI(TAG, "%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
 			(chip_info.features & CHIP_FEATURE_EMB_FLASH) ?
 					"embedded" : "external");
-
+#ifndef BRAODCASTER
 	xTaskCreatePinnedToCore(beacon_slave_test_run, "beacon_slave_test_run",
 			4096, NULL, 5, NULL, 1);
-
+#endif
 
 #ifdef BEACON
 
@@ -49,9 +49,11 @@ void app_main() {
 
 #endif
 
-	//at receiver site this task must be the pos. calc task
-//	xTaskCreatePinnedToCore(broadcaster, "broadcaster", 4096, NULL, 6, NULL,0);
 
+#ifdef BROADCASTER
+
+	xTaskCreatePinnedToCore(broadcaster, "broadcaster", 4096, NULL, 6, NULL,0);
+#endif
 	while (1) {
 		vTaskDelay(500);
 	}

@@ -163,6 +163,7 @@ void beacon_slave_test_run(void *pvParameters) {
 void broadcaster(void *pvParameters) {
 
 	broadcaster_init();
+
 	while (1) {
 		ESP_LOGI(TAG, "broadcaster");
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
