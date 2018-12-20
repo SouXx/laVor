@@ -32,7 +32,7 @@ void app_main() {
 	ESP_LOGI(TAG, "%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
 			(chip_info.features & CHIP_FEATURE_EMB_FLASH) ?
 					"embedded" : "external");
-#ifndef BRAODCASTER
+#ifndef BROADCASTER
 	xTaskCreatePinnedToCore(beacon_slave_test_run, "beacon_slave_test_run",
 			4096, NULL, 5, NULL, 1);
 #endif
