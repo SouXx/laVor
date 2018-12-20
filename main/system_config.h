@@ -27,8 +27,8 @@
 #define BEACON_1_X	(0)
 #define BEACON_1_Y	(0)
 #define BEACON_2_X	(0)
-#define BEACON_2_Y	(2000)
-#define BEACON_3_X	(3000)
+#define BEACON_2_Y	(1200)
+#define BEACON_3_X	(1500)
 #define BEACON_3_Y	(0)
 
 
@@ -66,8 +66,8 @@
 #define PCNT_H_LIM_VAL					(3000)
 #define PCNT_L_LIM_VAL					(0)
 // RECEIVER CONFIG
-#define LASER_RX							(0)
-#define INTR_DELAY 						(5000)
+#define LASER_RX							(21)
+#define LASER_INTR_DELAY 						(5000)
 
 //WIFI
 //wifi malte

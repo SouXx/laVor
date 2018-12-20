@@ -63,6 +63,8 @@ void receiver_init(void){
 
 
 		receiver_queue = xQueueCreate(10, sizeof(uint64_t));
+		position_queue = xQueueCreate(100, sizeof(struct pos_t));
+
 
 		//timer0_init();
 

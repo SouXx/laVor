@@ -24,6 +24,12 @@
 #include "receiver.h"
 
 QueueHandle_t receiver_queue;
+QueueHandle_t position_queue;
+
+struct pos_t {
+	int posX;
+	int posY;
+};
 
 
 
