@@ -21,7 +21,7 @@
 
 // Deifne BEACON or RECEIVER!!
 
-#define SYSCOMPONENT 		(BEACON)
+#define RECEIVER
 
 
 #define BEACON_1_X	(0)

@@ -131,7 +131,11 @@ void beacon_slave_test_run(void *pvParameters) {
 				ESP_LOGI(TAG, "%s", udp_payload.ucData);
 				if (!strcmp(data_cmp, udp_payload.ucData) && !statrtup_flag) {
 					timer0_init();
+
+					// Only BEACON needs Timer 1!!
+#ifdef BEACON
 					timer1_init();
+#endif
 					ESP_LOGI(TAG, "timer started");
 					//xTaskCreatePinnedToCore(beacon_controller,
 							//"beacon_controller", 4096, NULL, 6, NULL, 0);

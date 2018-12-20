@@ -64,7 +64,7 @@ void receiver_init(void){
 
 		receiver_queue = xQueueCreate(10, sizeof(uint64_t));
 
-		timer0_init();
+		//timer0_init();
 
 		ESP_LOGI(TAG,"Init Done!");
 
