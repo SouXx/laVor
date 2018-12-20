@@ -34,6 +34,8 @@ void app_main() {
 					"embedded" : "external");
 
 	xTaskCreatePinnedToCore(beacon_slave_test_run, "beacon_slave_test_run", 4096, NULL, 5, NULL,1);
+	xTaskCreatePinnedToCore(beacon_controller, "beacon_controller", 4096, NULL, 6, NULL, 0);
+						//at receiver site this task must be the pos. calc task
 //	xTaskCreatePinnedToCore(broadcaster, "broadcaster", 4096, NULL, 6, NULL,0);
 
 

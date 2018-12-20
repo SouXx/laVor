@@ -41,7 +41,7 @@ void beacon_salve_init(void) {
 	//mqtt_app_start();
 	//beacon_controller_init();
 
-	vTaskDelay(500);
+	//vTaskDelay(500);
 	ESP_LOGI(TAG, "done");
 }
 
@@ -64,7 +64,7 @@ void beacon_controller_init(void) {
 	gpio_config(&io_conf);
 
 	pwm_init();
-	vTaskDelay(1000 / portTICK_PERIOD_MS);
+	//vTaskDelay(1000 / portTICK_PERIOD_MS);
 
 	//gpio_init();
 	pcnt_init();
@@ -74,7 +74,7 @@ void beacon_controller_init(void) {
 		ESP_LOGI(TAG, "failed to create mqttQueue");
 	}
 	//timer0_init();
-	timer1_init();
+	//timer1_init();
 }
 
 void broadcaster_init(void) {

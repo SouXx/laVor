@@ -19,6 +19,11 @@
 
 // SYSTEM CONFIG
 
+// Deifne BEACON or RECEIVER!!
+
+#define SYSCOMPONENT 		(BEACON)
+
+
 #define BEACON_1_X	(0)
 #define BEACON_1_Y	(0)
 #define BEACON_2_X	(0)
@@ -50,7 +55,7 @@
 #define TIMER_DIVIDER         			80  //  Hardware timer clock divider 80 --> 1us -> 1 Countount
 #define TIMER_SCALE           			(TIMER_BASE_CLK / TIMER_DIVIDER)  // convert counter value to seconds
 #define TIMER_INTERVAL1_SEC   			(1.0 / CON_FREQUENCY)
-#define TIMER_INTERVAL0_SEC				(0.01)
+#define TIMER_INTERVAL0_SEC				(1.0 / CON_SPEED_SETPOINT)
 
 // ENCODER CONFIG
 #define ENCODER_CPR						(1600)

@@ -22,6 +22,9 @@ static const char* TAG = "Beacon Control";
 
 void beacon_controller(void *pvParameters) {
 
+	static const char* TAG = "Beacon Controller";
+
+
 	//control
 	beacon_controller_init();
 
@@ -94,7 +97,7 @@ void beacon_controller(void *pvParameters) {
 
 			        mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A,y);
 
-
+			        printf("Angle error: %d \n" ,a_e);
 
 		s_e_old = s_e;
 		old_count = count;
@@ -128,9 +131,10 @@ void beacon_slave_test_run(void *pvParameters) {
 				ESP_LOGI(TAG, "%s", udp_payload.ucData);
 				if (!strcmp(data_cmp, udp_payload.ucData) && !statrtup_flag) {
 					timer0_init();
-					ESP_LOGI(TAG, "timer0 started");
-					xTaskCreatePinnedToCore(beacon_controller,
-							"beacon_controller", 4096, NULL, 6, NULL, 0);
+					timer1_init();
+					ESP_LOGI(TAG, "timer started");
+					//xTaskCreatePinnedToCore(beacon_controller,
+							//"beacon_controller", 4096, NULL, 6, NULL, 0);
 					//at receiver site this task must be the pos. calc task
 					statrtup_flag = 1;
 				}

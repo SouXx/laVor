@@ -55,6 +55,8 @@ void udp_server_task(void *pvParameters) {
 		}
 		ESP_LOGI(TAG, "Socket binded");
 
+		gpio_set_level(LED,1);
+
 		while (1) {
 
 			ESP_LOGI(TAG, "Waiting for data");
