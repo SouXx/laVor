@@ -19,10 +19,10 @@
 
 // SYSTEM CONFIG
 
-// Deifne BEACON or RECEIVER!!
+// Define BEACON or RECEIVER!!
 
 #define RECEIVER
-
+//#define BEACON
 
 #define BEACON_1_X	(0)
 #define BEACON_1_Y	(0)
