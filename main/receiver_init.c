@@ -66,6 +66,8 @@ void receiver_init(void){
 		position_queue = xQueueCreate(100, sizeof(struct pos_t));
 
 
+		xTaskCreatePinnedToCore(receiver_pos_task, "receiver_pos_task", 4096, NULL, 4, NULL, 0);
+
 		//timer0_init();
 
 		ESP_LOGI(TAG,"Init Done!");
