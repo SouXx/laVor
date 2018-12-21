@@ -20,8 +20,8 @@
 // Define BEACON or RECEIVER!!
 
 //#define RECEIVER
-//#define BEACON
-#define BROADCASTER
+#define BEACON
+//#define BROADCASTER
 
 #define BEACON_1_X	(0)
 #define BEACON_1_Y	(0)

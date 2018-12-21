@@ -49,7 +49,6 @@ void app_main() {
 
 #endif
 
-
 #ifdef BROADCASTER
 
 	xTaskCreatePinnedToCore(broadcaster, "broadcaster", 4096, NULL, 6, NULL,0);

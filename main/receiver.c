@@ -116,32 +116,32 @@ void receiver_calc(int cap_1, int cap_2) {
 
 }
 
-void receiver_run(void) {
-
-	receiver_init();
-	uint64_t timer_value;
-	int capture = 0;
-	int capture_diff = 0;
-	int last_capture = 0;
-
-
-
-	while (1) {
-		xQueueReceive(receiver_queue, &timer_value, portMAX_DELAY);
-		capture = (int) timer_value;
-		//printf("Capture: %d \n", capture);
-
-		capture_diff = capture - last_capture;
-		if (capture_diff < 0)
-			capture_diff += 125000;
-
-		if (capture_diff > LASER_INTR_DELAY) {
-
-			receiver_calc(capture, last_capture);
-
-			last_capture = capture;
-		}
-	}
-
-}
+//void receiver_run(void) {
+//
+//	receiver_init();
+//	uint64_t timer_value;
+//	int capture = 0;
+//	int capture_diff = 0;
+//	int last_capture = 0;
+//
+//
+//
+//	while (1) {
+//		xQueueReceive(receiver_queue, &timer_value, portMAX_DELAY);
+//		capture = (int) timer_value;
+//		//printf("Capture: %d \n", capture);
+//
+//		capture_diff = capture - last_capture;
+//		if (capture_diff < 0)
+//			capture_diff += 125000;
+//
+//		if (capture_diff > LASER_INTR_DELAY) {
+//
+//			receiver_calc(capture, last_capture);
+//
+//			last_capture = capture;
+//		}
+//	}
+//
+//}
 

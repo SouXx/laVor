@@ -22,5 +22,20 @@
 
 
 #include "system_include.h"
+#include "beacon_init.h"
+#include "lavor_cJSON.h"
+#include "udp.h"
+#include "timer.h"
+#include "receiver.h"
+
+extern QueueHandle_t timer_queue;
+extern QueueHandle_t udpQueue;
+extern QueueHandle_t mqttQueue;
+extern QueueHandle_t mcQueue;
+extern QueueHandle_t receiver_queue;
+
+void beacon_run(void *pvParameters);
+void receiver_run(void *pvParameters);
+void broadcaster(void *pvParameters);
 
 #endif /* MAIN_LAVOR_SYSTEM_H_ */

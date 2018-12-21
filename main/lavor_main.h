@@ -2,7 +2,7 @@
  * lavor_main.h
  *
  *  Created on: Nov 2, 2018
- *      Author: tobi
+ *      Author: Tobias Frahm
  *
  * This code is part of the LaVOR system application. Please see the license.txt
  * file for further information.
@@ -31,5 +31,6 @@
 #include "beacon_init.h"
 #include "receiver.h"
 #include "receiver_init.h"
+#include "lavor_system.h"
 
 #endif /* MAIN_LAVOR_MAIN_H_ */

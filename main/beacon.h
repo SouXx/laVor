@@ -21,7 +21,6 @@
 #define MAIN_BEACON_H_
 
 #include "system_include.h"
-#include "lavor_main.h"
 #include "beacon_init.h"
 #include "lavor_cJSON.h"
 #include "udp.h"

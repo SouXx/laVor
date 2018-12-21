@@ -46,7 +46,6 @@
 
 #include <sys/param.h>
 
-
 #include "esp_intr_alloc.h"
 #include "esp_log.h"
 #include "esp_err.h"

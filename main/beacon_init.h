@@ -27,7 +27,6 @@
 #include "wifi.h"
 #include "mcpwm.h"
 #include "udp.h"
-#include "system_config.h"
 #include "timer.h"
 #include "mqtt.h"
 #include "pcnt.h"

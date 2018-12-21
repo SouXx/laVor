@@ -36,7 +36,7 @@
 extern QueueHandle_t receiver_queue;
 
 void receiver_calc(int cap1, int cap2);
-void receiver_run(void);
+
 void receiver_pos_task(void);
 
 
