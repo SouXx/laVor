@@ -32,13 +32,9 @@ void app_main() {
 	ESP_LOGI(TAG, "%dMB %s flash\n", spi_flash_get_chip_size() / (1024 * 1024),
 			(chip_info.features & CHIP_FEATURE_EMB_FLASH) ?
 					"embedded" : "external");
-#ifndef BROADCASTER
-	xTaskCreatePinnedToCore(beacon_slave_test_run, "beacon_slave_test_run",
-			4096, NULL, 5, NULL, 1);
-#endif
 
 #ifdef BEACON
-
+	xTaskCreatePinnedToCore(beacon_run, "beacon_run", 4096, NULL, 5, NULL, 1);
 	xTaskCreatePinnedToCore(beacon_controller, "beacon_controller", 4096, NULL, 6, NULL, 0);
 
 #endif
@@ -53,8 +49,9 @@ void app_main() {
 
 	xTaskCreatePinnedToCore(broadcaster, "broadcaster", 4096, NULL, 6, NULL,0);
 #endif
+
 	while (1) {
-		vTaskDelay(500);
+		vTaskSuspend(NULL);
 	}
 	vTaskDelete(NULL);
 

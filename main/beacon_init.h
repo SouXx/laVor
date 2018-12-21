@@ -31,7 +31,7 @@
 #include "mqtt.h"
 #include "pcnt.h"
 
-void beacon_salve_init(void);
+void beacon_init(void);
 void beacon_master_init(void);
 void beacon_controller_init(void);
 void broadcaster_init(void);

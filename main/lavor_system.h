@@ -23,6 +23,7 @@
 
 #include "system_include.h"
 #include "beacon_init.h"
+#include "receiver_init.h"
 #include "lavor_cJSON.h"
 #include "udp.h"
 #include "timer.h"

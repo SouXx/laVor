@@ -18,8 +18,8 @@
  */
 #include "beacon_init.h"
 
-void beacon_salve_init(void) {
-	static const char* TAG = "beacon_slave";
+void beacon_init(void) {
+	static const char* TAG = "[beacon]";
 
 	ESP_LOGI(TAG, "Initialize WIFI...");
 	ESP_ERROR_CHECK(nvs_flash_init());
@@ -38,7 +38,7 @@ void beacon_salve_init(void) {
 	esp_log_level_set("TRANSPORT", ESP_LOG_VERBOSE);
 	esp_log_level_set("OUTBOX", ESP_LOG_VERBOSE);
 
-	//mqtt_app_start();
+	mqtt_app_start();
 	//beacon_controller_init();
 
 	//vTaskDelay(500);

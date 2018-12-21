@@ -21,36 +21,32 @@
 static const char *TAG = "[system] ";
 
 void beacon_run(void *pvParameters) {
+
+	ESP_LOGI(TAG, "Startup");
 	esp_mqtt_event_handle_t event;
 	unsigned int statrtup_flag = 0;
-	ESP_LOGI(TAG, "Startup");
-	beacon_salve_init();
+	beacon_init();
 
-	while(udpQueue != 0) {
+	while(udpQueue != 0 && !statrtup_flag) {
 		if (xQueueReceive(udpQueue, &udp_payload, (TickType_t) 10)) {
 			char data_cmp[128] = "LAVOR_SYNC";
 
 			ESP_LOGI(TAG, "%s", udp_payload.ucData);
 			if (!strcmp(data_cmp, udp_payload.ucData) && !statrtup_flag) {
 				timer0_init();
-
-				// Only BEACON needs Timer 1!!
 				timer1_init();
 				ESP_LOGI(TAG, "timer started");
-				//xTaskCreatePinnedToCore(beacon_controller,
-				//"beacon_controller", 4096, NULL, 6, NULL, 0);
-				//at receiver site this task must be the pos. calc task
 				statrtup_flag = 1;
 			}
 		}
 	}
 	while (1) {
-		//implement further logic here
+
 		if (statrtup_flag) {
 			if (mqttQueue != 0) {
 				if (xQueueReceive(mqttQueue, &(event), (TickType_t) 10)) {
 					ESP_LOGI(TAG, "mqtt_received");
-					printf("DATA=%.*s\r\n", event->data_len, event->data);
+					//printf("DATA=%.*s\r\n", event->data_len, event->data);
 					cjson_mc(event->data);
 				}
 			}
@@ -60,26 +56,24 @@ void beacon_run(void *pvParameters) {
 }
 
 void receiver_run(void *pvParameters) {
-	receiver_init();
+
+	ESP_LOGI(TAG, "Startup");
 	uint64_t timer_value;
 	int capture = 0;
 	int capture_diff = 0;
 	int last_capture = 0;
+	unsigned int statrtup_flag = 0;
+	receiver_init();
 
-	while(udpQueue != 0) {
+	while(udpQueue != 0 && !statrtup_flag) {
 		if (xQueueReceive(udpQueue, &udp_payload, (TickType_t) 10)) {
 			char data_cmp[128] = "LAVOR_SYNC";
 
 			ESP_LOGI(TAG, "%s", udp_payload.ucData);
 			if (!strcmp(data_cmp, udp_payload.ucData)) {
 				timer0_init();
-
-				// Only BEACON needs Timer 1!!
 				ESP_LOGI(TAG, "timer started");
-				//xTaskCreatePinnedToCore(beacon_controller,
-				//"beacon_controller", 4096, NULL, 6, NULL, 0);
-				//at receiver site this task must be the pos. calc task
-				//statrtup_flag = 1;
+				statrtup_flag = 1;
 			}
 		}
 	}
@@ -88,17 +82,27 @@ void receiver_run(void *pvParameters) {
 
 		xQueueReceive(receiver_queue, &timer_value, portMAX_DELAY);
 		capture = (int) timer_value;
-		//printf("Capture: %d \n", capture);
-
 		capture_diff = capture - last_capture;
 		if (capture_diff < 0)
 			capture_diff += 125000;
 
 		if (capture_diff > LASER_INTR_DELAY) {
-
 			receiver_calc(capture, last_capture);
-
 			last_capture = capture;
+
+			ESP_LOGI(TAG, "receiver_calculated");
 		}
 	}
+}
+
+void broadcaster(void *pvParameters) {
+
+	broadcaster_init();
+
+	while (1) {
+		ESP_LOGI(TAG, "broadcaster");
+		vTaskSuspend(NULL);
+	}
+	vTaskDelete(NULL);
+
 }

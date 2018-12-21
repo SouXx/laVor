@@ -20,43 +20,49 @@
 
 #include "receiver.h"
 
+void receiver_pos_task(void) {
 
-void receiver_pos_task(void){
-
-	static const char* TAG = "Mean Position";
-
+	static const char* TAG = "[mean_position]";
 
 	int pos_counter = 0;
 	int meanX = 0;
 	int meanY = 0;
 	struct pos_t rx_pos;
 
-	while(1){
-		xQueueReceive(position_queue, &rx_pos, portMAX_DELAY);
+	while (1) {
+		int cnt = position_queue;
 
-		meanX += rx_pos.posX;
-		meanY += rx_pos.posY;
-		pos_counter ++;
+		ESP_LOGI(TAG, "Queue: %d", cnt);
 
-		if (pos_counter >= 30){
-			meanX /= pos_counter;
-			meanY /= pos_counter;
+		while (position_queue) {
 
-			ESP_LOGI(TAG, "Mean Position X: %d \t Y: %d", meanX, meanY);
+			xQueueReceive(position_queue, &rx_pos, portMAX_DELAY);
+			meanX += rx_pos.posX;
+			meanY += rx_pos.posY;
+			pos_counter++;
 
-			meanX = 0;
-			meanY = 0;
-			pos_counter = 0;
+			if (pos_counter >= cnt) {
+				meanX /= pos_counter;
+				meanY /= pos_counter;
+
+				ESP_LOGI(TAG, "Mean Position X: %d \t Y: %d", meanX, meanY);
+				meanX = 0;
+				meanY = 0;
+				pos_counter = 0;
+			}
+
 		}
 
+		esp_mqtt_client_publish(mqttClient, "/esp/test0", "test-esp",
+				sizeof("test-esp"), 0, 0);
+		vTaskDelay(1000 / portTICK_PERIOD_MS);
 	}
-
-
+	vTaskDelete(NULL);
 }
 
 void receiver_calc(int cap_1, int cap_2) {
 
-	static const char* TAG = "Receiver calculation";
+	static const char* TAG = "[receiver_calculation]";
 
 	struct pos_t calc_pos;
 
@@ -92,7 +98,8 @@ void receiver_calc(int cap_1, int cap_2) {
 
 	}
 	// Beacon 2 and Beacon 3( vlt nicht sinnvoll?!?
-	else if (0 && cap1 >= 31250 && cap1 < 62500 && cap2 >= 93750 && cap2 < 125000) {
+	else if (0 && cap1 >= 31250 && cap1 < 62500 && cap2 >= 93750
+			&& cap2 < 125000) {
 		xp = ((-m2 * BEACON_3_X) - BEACON_2_Y) / (m1 - m2);
 		yp = (m1 * xp) + BEACON_2_Y;
 
@@ -115,33 +122,4 @@ void receiver_calc(int cap_1, int cap_2) {
 	}
 
 }
-
-//void receiver_run(void) {
-//
-//	receiver_init();
-//	uint64_t timer_value;
-//	int capture = 0;
-//	int capture_diff = 0;
-//	int last_capture = 0;
-//
-//
-//
-//	while (1) {
-//		xQueueReceive(receiver_queue, &timer_value, portMAX_DELAY);
-//		capture = (int) timer_value;
-//		//printf("Capture: %d \n", capture);
-//
-//		capture_diff = capture - last_capture;
-//		if (capture_diff < 0)
-//			capture_diff += 125000;
-//
-//		if (capture_diff > LASER_INTR_DELAY) {
-//
-//			receiver_calc(capture, last_capture);
-//
-//			last_capture = capture;
-//		}
-//	}
-//
-//}
 

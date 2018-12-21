@@ -22,7 +22,7 @@ static EventGroupHandle_t wifi_event_group;
 const int IPV4_GOTIP_BIT = BIT0;
 const int IPV6_GOTIP_BIT = BIT1;
 
-static const char *TAG = "WIFI";
+static const char *TAG = "[wlan]";
 
 esp_err_t event_handler(void *ctx, system_event_t *event)
 {

@@ -19,24 +19,22 @@
 
 // Define BEACON or RECEIVER!!
 
-//#define RECEIVER
-#define BEACON
+#define RECEIVER
+//#define BEACON
 //#define BROADCASTER
 
 #define BEACON_1_X	(0)
 #define BEACON_1_Y	(0)
 #define BEACON_2_X	(0)
-#define BEACON_2_Y	(1200)
-#define BEACON_3_X	(1500)
+#define BEACON_2_Y	(2000)
+#define BEACON_3_X	(3000)
 #define BEACON_3_Y	(0)
-
-
 
 //ONBAORD CONFIG
 #define LED 							(2)
 #define BUTTON							(0)
 
-// CONTROLLER CONFIG
+// CONTROLLER Parameter CONFIG
 #define CON_SPEED_SETPOINT				(8.0) // Revolutions per second
 #define CON_FREQUENCY					(80.0)// Must be multiple of speed setpoint
 #define CON_P							(0.7767)
@@ -104,11 +102,9 @@ typedef struct {
 } motor_control_values_t;
 
 struct udp_event_t {
-
 	char ucData[128];
 };
 
 #define ESP_INTR_FLAG_DEFAULT 0
-
 
 #endif /* MAIN_SYSTEM_CONFIG_H_ */

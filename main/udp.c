@@ -18,7 +18,7 @@
 
 #include "udp.h"
 
-static const char *TAG = "UDP";
+static const char *TAG = "[udp]";
 static const char *payload = "LAVOR_SYNC";
 
 void udp_server_task(void *pvParameters) {

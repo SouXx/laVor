@@ -30,7 +30,7 @@
 #include "timer.h"
 #include "mqtt.h"
 #include "pcnt.h"
-#include "receiver.h"
+#include "receiver_init.h"
 
 
 extern QueueHandle_t receiver_queue;
