@@ -86,6 +86,8 @@ void receiver_run(void *pvParameters) {
 		if (capture_diff < 0)
 			capture_diff += 125000;
 
+		//printf("Capture: %d \n",capture);
+
 		if (capture_diff > LASER_INTR_DELAY) {
 			receiver_calc(capture, last_capture);
 			last_capture = capture;
