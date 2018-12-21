@@ -97,7 +97,7 @@ void beacon_controller(void *pvParameters) {
 
 			        mcpwm_set_duty(MCPWM_UNIT_0, MCPWM0A, MCPWM_OPR_A,y);
 
-			        printf("Angle error: %d \n" ,a_e);
+			       // printf("Angle error: %d \n" ,a_e);
 
 		s_e_old = s_e;
 		old_count = count;
