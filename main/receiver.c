@@ -46,7 +46,7 @@ void receiver_pos_task(void) {
 	while (1) {
 		//int cnt = position_queue;
 
-		ESP_LOGI(TAG, "Queue: %d", cnt);
+		//ESP_LOGI(TAG, "Queue: %d", cnt);
 
 		while (uxQueueMessagesWaiting(position_queue)) {
 
