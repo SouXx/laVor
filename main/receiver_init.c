@@ -73,7 +73,7 @@ void receiver_init(void) {
 
 
 	if(xTaskCreatePinnedToCore(receiver_pos_task, "receiver_pos_task", 4096, NULL,
-			4, NULL, 0) == pdPASS){
+			6, NULL, 0) == pdPASS){
 		ESP_LOGI(TAG, "receiver_pos_task started!");
 	}
 

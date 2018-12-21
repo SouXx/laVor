@@ -29,12 +29,27 @@ void receiver_pos_task(void) {
 	int meanY = 0;
 	struct pos_t rx_pos;
 
+//	msg.payload = {
+//	  tstamp: 1438637044000,
+//	  data: {
+//	    x: 3.14,
+//	    y: 1.41
+//	  }
+//	}
+	cJSON *tstamp = NULL;
+	cJSON *x = NULL;
+	cJSON *y = NULL;
+
+	cJSON *pos = cJSON_CreateObject();
+	cJSON *data = cJSON_CreateObject();
+
+
 	while (1) {
 		int cnt = position_queue;
 
 		ESP_LOGI(TAG, "Queue: %d", cnt);
 
-		while (position_queue) {
+		while (position_queue != 0) {
 
 			xQueueReceive(position_queue, &rx_pos, portMAX_DELAY);
 			meanX += rx_pos.posX;
@@ -44,6 +59,8 @@ void receiver_pos_task(void) {
 			if (pos_counter >= cnt) {
 				meanX /= pos_counter;
 				meanY /= pos_counter;
+				x = cJSON_CreateNumber(meanX);
+				y = cJSON_CreateNumber(meanY);
 
 				ESP_LOGI(TAG, "Mean Position X: %d \t Y: %d", meanX, meanY);
 				meanX = 0;
@@ -53,8 +70,13 @@ void receiver_pos_task(void) {
 
 		}
 
-		esp_mqtt_client_publish(mqttClient, "/esp/test0", "test-esp",
-				sizeof("test-esp"), 0, 0);
+		cJSON_AddItemToObject(data, "x", x);
+		cJSON_AddItemToObject(data, "y", y);
+		cJSON_AddItemToObject(pos, "tstamp", tstamp);
+		cJSON_AddItemToObject(pos, "data", data);
+
+		esp_mqtt_client_publish(mqttClient, "/esp/pos", pos,
+				sizeof(pos), 0, 0);
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
 	}
 	vTaskDelete(NULL);

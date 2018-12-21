@@ -105,6 +105,19 @@ struct udp_event_t {
 	char ucData[128];
 };
 
+/* The cJSON structure: */
+//typedef struct cJSON
+//{
+//    struct cJSON *next;
+//    struct cJSON *prev;
+//    struct cJSON *child;
+//    int type;
+//    char *valuestring;
+//    /* writing to valueint is DEPRECATED, use cJSON_SetNumberValue instead */
+//    int valueint;
+//    double valuedouble;
+//    char *string;
+//} cJSON;
 #define ESP_INTR_FLAG_DEFAULT 0
 
 #endif /* MAIN_SYSTEM_CONFIG_H_ */
