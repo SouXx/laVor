@@ -43,40 +43,47 @@ void receiver_pos_task(void) {
 	cJSON *pos = cJSON_CreateObject();
 	cJSON *data = cJSON_CreateObject();
 
-
 	while (1) {
-		int cnt = position_queue;
+		//int cnt = position_queue;
 
 		ESP_LOGI(TAG, "Queue: %d", cnt);
 
-		while (position_queue != 0) {
+		while (uxQueueMessagesWaiting(position_queue)) {
 
 			xQueueReceive(position_queue, &rx_pos, portMAX_DELAY);
 			meanX += rx_pos.posX;
 			meanY += rx_pos.posY;
 			pos_counter++;
 
-			if (pos_counter >= cnt) {
-				meanX /= pos_counter;
-				meanY /= pos_counter;
-				x = cJSON_CreateNumber(meanX);
-				y = cJSON_CreateNumber(meanY);
+			/*	if (pos_counter >= cnt) {
+			 meanX /= pos_counter;
+			 meanY /= pos_counter;
+			 x = cJSON_CreateNumber(meanX);
+			 y = cJSON_CreateNumber(meanY);
 
-				ESP_LOGI(TAG, "Mean Position X: %d \t Y: %d", meanX, meanY);
-				meanX = 0;
-				meanY = 0;
-				pos_counter = 0;
-			}
-
+			 ESP_LOGI(TAG, "Mean Position X: %d \t Y: %d", meanX, meanY);
+			 meanX = 0;
+			 meanY = 0;
+			 pos_counter = 0;
+			 }*/
 		}
+
+		meanX /= pos_counter;
+		meanY /= pos_counter;
+		x = cJSON_CreateNumber(meanX);
+		y = cJSON_CreateNumber(meanY);
+
+		ESP_LOGI(TAG, "Mean Position X: %d \t Y: %d", meanX, meanY);
+		meanX = 0;
+		meanY = 0;
+		pos_counter = 0;
 
 		cJSON_AddItemToObject(data, "x", x);
 		cJSON_AddItemToObject(data, "y", y);
 		cJSON_AddItemToObject(pos, "tstamp", tstamp);
 		cJSON_AddItemToObject(pos, "data", data);
 
-		esp_mqtt_client_publish(mqttClient, "/esp/pos", pos,
-				sizeof(pos), 0, 0);
+		esp_mqtt_client_publish(mqttClient, "/esp/pos", pos, sizeof(pos), 0, 0);
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
 	}
 	vTaskDelete(NULL);
